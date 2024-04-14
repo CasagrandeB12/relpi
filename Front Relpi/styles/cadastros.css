@@ -1,0 +1,64 @@
+main{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1{
+    font-size: 30px;
+    padding: 30px;
+}
+
+fieldset{
+    padding: 20px;
+}
+
+form{
+    margin: 10px 0;
+}
+
+form label, form legend{
+    display: block;
+    font-size: 20px;
+    margin-bottom: 10px
+}
+
+.boxes{
+    margin-bottom: 20px;
+    padding: 10px 25px;
+    width: 25%;
+    border-radius: 1em;
+}
+
+.enviar{
+    width: 25%;
+    background: orange;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    transition: 0.5s background;
+    cursor: pointer;
+    padding: 20px;
+    margin-left: 33px;
+    margin-top: 20px;
+
+}
+
+.enviar:hover{
+    background: darkorange;
+
+}
+
+main{
+    flex-grow: 1;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
