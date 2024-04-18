@@ -59,7 +59,7 @@ public class TipoServicoJDBC implements TipoServicoDao {
 	}
 
 	@Override
-	public void update(TipoServico obj) {
+	public void update(TipoServico obj, Integer id) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
