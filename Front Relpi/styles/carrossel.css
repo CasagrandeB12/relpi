@@ -9,8 +9,8 @@
 }
 
 .swiper-slide img{
-    width: 100%; /* Ajustado para preencher a largura do contêiner */
-    height: auto; /* Altura automática para manter a proporção */
+    width: 100%; 
+    height: auto; 
 }
 
 .swiper-button-prev, 
@@ -44,7 +44,7 @@
     border-radius: 10px;
     margin: 1em;
     padding: 1em;
-    width: 100%; /* Alterado para ocupar toda a largura do contêiner */
+    width: 100%; 
 }
 
 .descricao_titulo{
@@ -85,14 +85,14 @@
 
     .swiper{
         width: 60%;
-        margin: 0 auto; /* Centraliza o carrossel */
+        margin: 0 auto;
     }
 
     .swiper-button-prev, 
     .swiper-button-next{
         display: block;
         top: 50%;
-        transform: translateY(100%); /* Centraliza verticalmente */
+        transform: translateY(100%); 
     }
 
     .card{
