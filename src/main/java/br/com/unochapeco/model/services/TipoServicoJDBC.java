@@ -1,4 +1,4 @@
-package br.com.unochapeco.model.impl;
+package br.com.unochapeco.model.services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,26 +8,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.unochapeco.model.dao.PaisDao;
-import br.com.unochapeco.model.entities.Pais;
+import org.springframework.stereotype.Repository;
+
+import br.com.unochapeco.model.dao.TipoServicoDao;
+import br.com.unochapeco.model.entities.TipoServico;
 import br.com.unochapeco.relpi.controller.db.DB;
 import br.com.unochapeco.relpi.controller.db.DbException;
 
-public class PaisDaoJDBC implements PaisDao {
+@Repository
+public class TipoServicoJDBC implements TipoServicoDao {
 
 	private Connection conn;
 
-	public PaisDaoJDBC(Connection conn) {
+	public TipoServicoJDBC(Connection conn) {
 		this.conn = conn;
 	}
 
 	@Override
-	public void insert(Pais obj) {
+	public void insert(TipoServico obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO pais "
-					+ "(PAIS_ID, NOME) "
+					"INSERT INTO tipo_servico "
+					+ "(TIPOSERVICO_ID, NOME) "
 					+ "VALUES "
 					+ "(?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
@@ -56,13 +59,13 @@ public class PaisDaoJDBC implements PaisDao {
 	}
 
 	@Override
-	public void update(Pais obj) {
+	public void update(TipoServico obj) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE PAIS " 
+					"UPDATE TIPO_SERVICO " 
 					+ "SET NOME = ? "
-					+ "WHERE pais_id = ?",
+					+ "WHERE tiposervico_id = ?",
 					Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getNome());
@@ -83,8 +86,8 @@ public class PaisDaoJDBC implements PaisDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"DELETE FROM pais "
-					+ "WHERE pais_id = ?"
+					"DELETE FROM TIPO_SERVICO "
+					+ "WHERE TIPOSERVICO_id = ?"
 					);
 			st.setInt(1, id);
 			st.executeUpdate();
@@ -99,15 +102,16 @@ public class PaisDaoJDBC implements PaisDao {
 	}
 
 	@Override
-	public Pais findById(Integer id) {
+	public TipoServico findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT  * FROM PAIS " + "WHERE pais_id = ?");
+			st = conn.prepareStatement("SELECT  * FROM TIPO_SERVICO " 
+										+ "WHERE TIPOSERVICO_id = ?");
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Pais obj = instantiatePais(rs);
+				TipoServico obj = instantiatePais(rs);
 				return obj;
 			}
 			return null;
@@ -116,25 +120,25 @@ public class PaisDaoJDBC implements PaisDao {
 		}
 	}
 
-	private Pais instantiatePais(ResultSet rs) throws SQLException {
-		Pais pais = new Pais();
-		pais.setId(rs.getInt("pais_id"));
-		pais.setNome(rs.getString("nome"));
-		return pais;
+	private TipoServico instantiatePais(ResultSet rs) throws SQLException {
+		TipoServico tipoServico = new TipoServico();
+		tipoServico.setId(rs.getInt("tiposervico_id"));
+		tipoServico.setNome(rs.getString("nome"));
+		return tipoServico;
 	}
 
 	@Override
-	public List<Pais> findAll() {
+	public List<TipoServico> findAll() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT  * FROM PAIS ");
+			st = conn.prepareStatement("SELECT  * FROM TIPO_SERVICO ORDER BY TIPOSERVICO_ID  ");
 			rs = st.executeQuery();
 
-			List<Pais> list = new ArrayList<>();
+			List<TipoServico> list = new ArrayList<>();
 
 			while (rs.next()) {
-				Pais obj = instantiatePais(rs);
+				TipoServico obj = instantiatePais(rs);
 				list.add(obj);
 			}
 			return list;

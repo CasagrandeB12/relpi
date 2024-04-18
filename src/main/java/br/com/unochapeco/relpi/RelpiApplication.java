@@ -9,8 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.unochapeco.model.dao.DaoFactory;
-import br.com.unochapeco.model.dao.PaisDao;
-import br.com.unochapeco.model.entities.Pais;
+import br.com.unochapeco.model.dao.TipoServicoDao;
+import br.com.unochapeco.model.entities.TipoServico;
 import br.com.unochapeco.relpi.controller.db.DB;
 
 @SpringBootApplication
@@ -22,23 +22,23 @@ public class RelpiApplication {
 		
 //		Scanner sc = new Scanner(System.in);
 		
-		PaisDao paisDao = DaoFactory.createPaisDao();
+		TipoServicoDao tipoServicoDao = DaoFactory.createTipoServicoDao();
 		
-		Pais newPais = new Pais(8, "Portugals");
-		paisDao.insert(newPais);
-		System.out.println("Inserido. Novo id = " + newPais.getId());
+//		TipoServico newTipoServico = new TipoServico(2, "Cuidados Gerais");
+//		tipoServicoDao.insert(newTipoServico);
+//		System.out.println("Inserido. Novo id = " + newTipoServico.getId());
 //		
 //		newPais = paisDao.findById(1);
 //		newPais.setNome("Uruguai");
 //		paisDao.update(newPais);
 		
-		System.out.println("Informe um id para teste de deleção");
-		paisDao.deleteById(2);
+//		System.out.println("Informe um id para teste de deleção");
+//		tipoServicoDao.deleteById(8);
 		
-		List<Pais> list = new ArrayList<>();
-		list = paisDao.findAll();
-		for(Pais pais : list) {
-			System.out.println(pais);
+		List<TipoServico> list = new ArrayList<>();
+		list = tipoServicoDao.findAll();
+		for(TipoServico tipoServico : list) {
+			System.out.println(tipoServico);
 		}
 		//DB.closeConnection();
 	}

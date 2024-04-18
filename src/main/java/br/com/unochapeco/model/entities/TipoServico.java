@@ -3,16 +3,30 @@ package br.com.unochapeco.model.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Pais implements Serializable{
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tipo_servico")
+public class TipoServico implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tiposervico_id")
 	private Integer id;
+	
+	@Column(name = "nome", length = 45, nullable = true)
 	private String nome;
 	
-	public Pais() {
+	public TipoServico() {
 	}
 	
-	public Pais(int id, String nome) {
+	public TipoServico(int id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
@@ -46,12 +60,12 @@ public class Pais implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pais other = (Pais) obj;
+		TipoServico other = (TipoServico) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Pais [id=" + id + ", nome=" + nome + "]";
+		return "TipoServico [id=" + id + ", nome=" + nome + "]";
 	}
 }
