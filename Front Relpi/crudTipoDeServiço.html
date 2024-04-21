@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipo de serviço - CRUD</title>
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/cadastros.css">
-    <link rel="stylesheet" href="styles/contato.css">
+    <link rel="stylesheet" href="styles/crud.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles/rodape.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <title>Cadastro Paises</title>    
+    <link rel="icon" type="image/x-icon" href="/img/Logo.svg">
 </head>
 <body>
     <header class="cabecalho">
@@ -24,7 +24,6 @@
                 <span class="cabecalho_menu-hamburguer container_imagem"></span>
             </label>
             <ul class="lista_menu">
-                <li class="lista_menu_titulo">Categorias</li>
                 <li class="lista_menu_item">
                     <a href="#">Farmaceúticos</a>
                 </li>
@@ -54,7 +53,6 @@
             </label>
 
             <ul class="lista_menu">
-                <li class="lista_menu_titulo">Categorias</li>
                 <li class="lista_menu_item">
                     <a href="#">Farmaceúticos</a>
                 </li>
@@ -82,31 +80,13 @@
 
             <ul class="lista_menu">
                 <li class="lista_menu_item">
-                    <a href="cadastroPais.html">Paises</a>
+                    <a href="crudPessoas.html">Pessoas</a>
                 </li>
                 <li class="lista_menu_item">
-                    <a href="cadastroEstado.html">Estados</a>
+                    <a href="crudServiço.html">Serviço</a>
                 </li>
                 <li class="lista_menu_item">
-                    <a href="cadastroCidade.html">Cidades</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroBairro.html">Bairros</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroEndereço.html">Endereços</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroPessoas.html">Pessoas</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroProfissional.html">Profissional</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroServiço.html">Serviço</a>
-                </li>
-                <li class="lista_menu_item">
-                    <a href="cadastroTipoDeServiço.html">Tipo de Serviço</a>
+                    <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
                 </li>
             </ul>
         </ul>
@@ -118,33 +98,41 @@
             </a>
         </div>
     </header>
-    <main>
-        <h1>CADASTRO DE PROFISSIONAL</h1>
-        <form>
-            <fieldset>
-                <label for="idProfissional"> ID do profissional</label>
-				<input type="text" id="idProfissional" class="boxes" required placeholder="#123">
-                <label for="idServico">ID do serviço</label>
-                <input type="text" id="idServico" class="boxes" required placeholder="#123">
-            </fieldset>
-
-            <input type="submit" value="Enviar" class="enviar">
-        </form>
-    </main>
-
-    <section class="contato">
-        <div class="contato_desc">
-            <h2 class="contato_titulo">Fique por dentro das novidades!</h2>
-            <p class="contato_texto">Atualizações novos serviços, promoções e outros.</p>
+    <main class="conteudo">
+        <div class="container_crud">
+            <div class="cadastroTipoDeServiço">Cadastro do Tipo de Serviços</div>
+            
+            <!-- Filtro -->
+            <form class="filter-form" id="formPessoas">
+                <input type="text" id="nomeDoServiço" placeholder="Nome do tipo de serviço">
+                <input type="text" id="id" placeholder="Código">
+                <button class="btn_cadastro btn_add">Adicionar</button>
+                <button class="btn_cadastro btn_buscar">Buscar</button>
+            </form>
+            <table>
+                <thead class="theadTipoDeServiço">
+                    <tr>
+                        <th>Nome do tipo de serviço</th>
+                        <th>Código</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    <tr>
+                        <td>Exemplo</td>
+                        <td>123</td>
+                        <td>
+                            <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>          
         </div>
-        <input type="email" placeholder="Cadastre seu email" class="contato_email">
-    </section>
-
-    <hr/>
-
-    
+    </main>
     <footer class="rodape">
         <h2 class="rodape_titulo">Abex IV - 2024</h2>
     </footer>
+    <script src="crudTipoDeServiço.js"></script>
 </body>
-</html> 
+</html>

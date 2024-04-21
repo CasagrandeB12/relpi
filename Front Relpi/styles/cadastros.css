@@ -4,7 +4,7 @@ main{
     text-align: center;
 }
 
-h1{
+.titulo_cadastro{
     font-size: 30px;
     padding: 30px;
 }
@@ -41,14 +41,11 @@ form label, form legend{
     transition: 0.5s background;
     cursor: pointer;
     padding: 20px;
-    margin-left: 33px;
     margin-top: 20px;
-
 }
 
 .enviar:hover{
     background: darkorange;
-
 }
 
 main{

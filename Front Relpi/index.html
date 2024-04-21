@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Relpi</title>
+        <title>RELPI</title>
         <link rel="stylesheet" href="styles/reset.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
         <link rel="stylesheet" href="styles/style.css">
@@ -17,6 +17,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="/img/Logo.svg">
     </head>
 
     <body>
@@ -27,7 +28,6 @@
                     <span class="cabecalho_menu-hamburguer container_imagem"></span>
                 </label>
                 <ul class="lista_menu">
-                    <li class="lista_menu_titulo">Categorias</li>
                     <li class="lista_menu_item">
                         <a href="#">Farmaceúticos</a>
                     </li>
@@ -57,7 +57,6 @@
                 </label>
     
                 <ul class="lista_menu">
-                    <li class="lista_menu_titulo">Categorias</li>
                     <li class="lista_menu_item">
                         <a href="#">Farmaceúticos</a>
                     </li>
@@ -85,31 +84,13 @@
     
                 <ul class="lista_menu">
                     <li class="lista_menu_item">
-                        <a href="cadastroPais.html">Paises</a>
+                        <a href="crudPessoas.html">Pessoas</a>
                     </li>
                     <li class="lista_menu_item">
-                        <a href="cadastroEstado.html">Estados</a>
+                        <a href="crudServiço.html">Serviço</a>
                     </li>
                     <li class="lista_menu_item">
-                        <a href="cadastroCidade.html">Cidades</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroBairro.html">Bairros</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroEndereço.html">Endereços</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroPessoas.html">Pessoas</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroProfissional.html">Profissional</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroServiço.html">Serviço</a>
-                    </li>
-                    <li class="lista_menu_item">
-                        <a href="cadastroTipoDeServiço.html">Tipo de Serviço</a>
+                        <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
                     </li>
                 </ul>
             </ul>
@@ -125,7 +106,30 @@
         <section class="banner">
             <h2 class="banner_titulo">Precisa de ajuda?</h2>
             <p class="banner_texto">Encontre abaixo que precisa para seu atendimento!</p>
-            <input type="search" class="banner_pesquisa" placeholder="Qual será sua próxima necessidade a ser atendida?">
+            <div class="imagem-container-banner">
+                <div class="imagem_banner">
+                    <a href="#">
+                        <img id="img_banner" src="img/Logo.png" alt="">
+                        <p>Médicos gerais</p>
+                    </a>
+                </div>
+                <div class="imagem_banner">
+                    <a href="#">
+                        <img id="img_banner" src="img/Logo.png" alt="">
+                        <p>Dentistas</p>
+                    </a>
+                </div>
+                <div class="imagem_banner">
+                    <a href="#">
+                        <img id="img_banner" src="img/Logo.png" alt="">
+                        <p>Psicólogos</p>
+                    </a>
+                </div>
+            </div>
+            
+
+            </div>
+
         </section>
 
         <section class="carrossel">
