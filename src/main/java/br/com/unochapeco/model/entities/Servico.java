@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tipo_servico")
-public class TipoServico implements Serializable{
+@Table(name = "servico")
+public class Servico extends TipoServico implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -19,34 +19,54 @@ public class TipoServico implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private String descricao;
+	private Integer IdTipoServico;
 	
-	public TipoServico() {
+	public Servico() {
 	}
 	
-	public TipoServico(int id, String nome) {
+	public Servico(Integer id, String nome, String descricao, TipoServico IdTipoServico) {
 		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
+		this.IdTipoServico = IdTipoServico.getId();
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Integer getIdTipoServico() {
+		return IdTipoServico;
+	}
+
+	public void setIdTipoServico(Integer idTipoServico) {
+		IdTipoServico = idTipoServico;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -57,12 +77,7 @@ public class TipoServico implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoServico other = (TipoServico) obj;
+		Servico other = (Servico) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "TipoServico [id=" + id + ", nome=" + nome + "]";
 	}
 }

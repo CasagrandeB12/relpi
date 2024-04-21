@@ -1,4 +1,4 @@
-package br.com.unochapeco.relpi.controller;
+package br.com.unochapeco.relpi.services;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.unochapeco.model.dao.DaoFactory;
+import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
 import br.com.unochapeco.model.dao.TipoServicoDao;
 import br.com.unochapeco.model.entities.TipoServico;
 
 @RestController
 @RequestMapping("/tipo_servico")
-public class TipoServicoController {
+public class TipoServicoService {
 	
-	TipoServicoDao service = DaoFactory.createTipoServicoDao();
+	TipoServicoDao service = TipoServicoDaoFactory.createTipoServicoDao();
 	
     @GetMapping
     public ResponseEntity<List<TipoServico>> findAll() {
@@ -40,7 +40,7 @@ public class TipoServicoController {
     }
     
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
     	service.deleteById(id);
     	return ResponseEntity.noContent().build();
     }
@@ -50,5 +50,4 @@ public class TipoServicoController {
     	service.update(obj, id);
     	return ResponseEntity.ok().body(obj);
     }
-    
 }

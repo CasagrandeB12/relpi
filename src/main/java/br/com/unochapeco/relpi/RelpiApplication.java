@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.unochapeco.model.dao.DaoFactory;
+import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
 import br.com.unochapeco.model.dao.TipoServicoDao;
 import br.com.unochapeco.model.entities.TipoServico;
 import br.com.unochapeco.relpi.controller.db.DB;
@@ -22,7 +22,7 @@ public class RelpiApplication {
 		
 //		Scanner sc = new Scanner(System.in);
 		
-		TipoServicoDao tipoServicoDao = DaoFactory.createTipoServicoDao();
+		TipoServicoDao tipoServicoDao = TipoServicoDaoFactory.createTipoServicoDao();
 		
 //		TipoServico newTipoServico = new TipoServico(2, "Cuidados Gerais");
 //		tipoServicoDao.insert(newTipoServico);

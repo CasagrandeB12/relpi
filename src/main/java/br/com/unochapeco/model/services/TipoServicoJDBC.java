@@ -111,7 +111,7 @@ public class TipoServicoJDBC implements TipoServicoDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				TipoServico obj = instantiatePais(rs);
+				TipoServico obj = instantiateTipoServico(rs);
 				return obj;
 			}
 			return null;
@@ -120,7 +120,7 @@ public class TipoServicoJDBC implements TipoServicoDao {
 		}
 	}
 
-	private TipoServico instantiatePais(ResultSet rs) throws SQLException {
+	private TipoServico instantiateTipoServico(ResultSet rs) throws SQLException {
 		TipoServico tipoServico = new TipoServico();
 		tipoServico.setId(rs.getInt("tiposervico_id"));
 		tipoServico.setNome(rs.getString("nome"));
@@ -138,7 +138,7 @@ public class TipoServicoJDBC implements TipoServicoDao {
 			List<TipoServico> list = new ArrayList<>();
 
 			while (rs.next()) {
-				TipoServico obj = instantiatePais(rs);
+				TipoServico obj = instantiateTipoServico(rs);
 				list.add(obj);
 			}
 			return list;
