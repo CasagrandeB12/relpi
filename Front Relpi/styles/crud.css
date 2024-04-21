@@ -32,7 +32,8 @@ th {
     background-color: #f2f2f2;
 }
 
-.btn_add{
+
+.btn_cadastro{
     padding: 10px;
     background-color: orange;
     color: #fff;
@@ -44,19 +45,7 @@ th {
     border: none; 
 }
 
-.btn_filtro{
-    padding: 10px;
-    background-color: orange;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-block; 
-    text-align: center; 
-    border: none; 
-}
-
-.btn_action {
+.btn_action_erase, .btn_action_pencil {
     margin-top: 10px;
     padding: 10px;
     background-color:orange;
@@ -72,11 +61,14 @@ th {
     background-color: #0056b3;
 }
 .filter-form {
-    margin-bottom: 20px;
+    margin-bottom: 2em;
 }
-.filter-form input[type="text"] {
+.filter-form input {
     padding: 8px;
     width: 200px;
+    border: 2px solid orange;
+    border-radius: 10px;
+    margin: 0.8em;
 }
 .add-btn {
     float: right;

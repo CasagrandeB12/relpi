@@ -74,6 +74,25 @@
     font-weight: 700;
 }
 
+.imagem-container-banner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    padding: 3em;
+}
+
+.imagem-container-banner .imagem_banner {
+    text-align: center; /* Centraliza o texto */
+}
+
+.imagem-container p {
+    margin-top: 5px; /* Adiciona um pequeno espaço entre a imagem e o texto */
+}
+
+.img_banner{
+    width:100%
+}
+
 @media screen and (min-width: 1024px){
     .carrossel_titulo{
         font-size: 26px;
@@ -99,6 +118,24 @@
         width: 40%;
         margin: 2em auto;
     }
+
+    .imagem-container-banner {
+        display: flex;
+        justify-content: space-around;
+        align-items: center; /* Alinha os itens verticalmente ao centro */
+        padding: 3em;
+    }
+    
+    .imagem-container-banner .imagem_banner {
+        text-align: center; /* Centraliza o texto */
+    }
+    
+    
+    .imagem-container p {
+        margin-top: 5px; /* Adiciona um pequeno espaço entre a imagem e o texto */
+    }
+
+    
 }
 
 @media screen and (min-width: 1728px){
@@ -129,5 +166,21 @@
         width: 60%;
         margin-left: 3em;
         margin-top: 4em;
+    }
+
+    .imagem-container-banner {
+        display: flex;
+        justify-content: space-around;
+        align-items: center; /* Alinha os itens verticalmente ao centro */
+        padding: 3em;
+    }
+    
+    .imagem-container-banner .imagem_banner {
+        text-align: center; /* Centraliza o texto */
+    }
+    
+    
+    .imagem-container p {
+        margin-top: 5px; /* Adiciona um pequeno espaço entre a imagem e o texto */
     }
 }

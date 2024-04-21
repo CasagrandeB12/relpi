@@ -102,16 +102,16 @@
         <div class="container_crud">
             <div class="cadastroTipoDeServiço">Cadastro de Pessoas</div>
             
-            <form class="filter-form">
-                <input type="text" placeholder="Nome">
-                <input type="text" placeholder="CPF">
-                <input type="text" placeholder="RG">
-                <input type="text" placeholder="Gênero">
-                <input type="text" placeholder="Data de Nascimento">
-                <input type="text" placeholder="Email">
-                <input type="text" placeholder="Telefone">
-                <button class="btn_filtro">Buscar</button>
-                <button class="btn_add add-btn">Adicionar</button>
+            <form class="filter-form" id="formPessoas" required>
+                <input id="nome" type="text" placeholder="Nome" required>
+                <input id="CPF" type="text" placeholder="CPF" required>
+                <input id="rg" type="text" placeholder="RG" required>
+                <input id="genero" type="text" placeholder="Gênero" required>
+                <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
+                <input id="email" type="email" placeholder="Email" required>
+                <input id="telefone" type="tel" placeholder="Telefone" required>
+                <button type="submit" class="btn_cadastro btn_add">Adicionar</button>
+                <button class="btn_cadastro btn_buscar">Buscar</button>
             </form>
 
             <table>
@@ -127,18 +127,18 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="user-list">
                     <tr>
                         <td>Exemplo</td>
                         <td>123.456.789-00</td>
                         <td>1234567-8</td>
                         <td>Masculino</td>
-                        <td>01/01/1990</td>
+                        <td>01-01-1990</td>
                         <td>exemplo@email.com</td>
                         <td>(00) 1234-5678</td>
                         <td>
-                            <button class="btn_action"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn_action"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -148,5 +148,7 @@
     <footer class="rodape">
         <h2 class="rodape_titulo">Abex IV - 2024</h2>
     </footer>
+
+    <script src="crudPessoas.js"></script>
 </body>
 </html>

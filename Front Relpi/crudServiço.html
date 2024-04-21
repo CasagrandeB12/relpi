@@ -102,10 +102,11 @@
         <div class="container_crud">
             <div class="cadastroTipoDeServiço">Cadastro de Serviços</div>
             <form class="filter-form">
-                <input type="text" placeholder="Nome do serviço">
-                <input type="text" placeholder="Descrição">
-                <button class="btn_filtro">Buscar</button>
-                <button class="btn_add add-btn">Adicionar</button>
+                <input id="nomeDoServiço" type="text" placeholder="Nome do serviço">
+                <input id="descrição" type="text" placeholder="Descrição">
+                <input id="id" type="text" placeholder="Código">
+                <button class="btn_cadastro btn_add">Adicionar</button>
+                <button class="btn_cadastro btn_buscar">Buscar</button>
             </form>
             <table>
                 <thead>
@@ -116,14 +117,14 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="user-list">
                     <tr>
                         <td>Exemplo</td>
                         <td>.........</td>
                         <td>124</td>
                         <td>
-                            <button class="btn_action"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn_action"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -133,5 +134,7 @@
     <footer class="rodape">
         <h2 class="rodape_titulo">Abex IV - 2024</h2>
     </footer>
+
+    <script src="crudServiço.js"></script>
 </body>
 </html>
