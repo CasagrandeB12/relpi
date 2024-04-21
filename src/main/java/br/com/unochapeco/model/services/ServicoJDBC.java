@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.unochapeco.model.dao.ServicoDao;
 import br.com.unochapeco.model.entities.Servico;
+import br.com.unochapeco.model.entities.TipoServico;
 import br.com.unochapeco.relpi.controller.db.DB;
 import br.com.unochapeco.relpi.controller.db.DbException;
 
@@ -35,7 +36,6 @@ public class ServicoJDBC implements ServicoDao{
 			st.setInt(1, obj.getId());
 			st.setString(2, obj.getNome());
 			st.setString(3, obj.getDescricao());
-			st.setInt(4, obj.getIdTipoServico());
 			
 			int rowsAffected = st.executeUpdate();
 			if(rowsAffected > 0) {
@@ -71,8 +71,37 @@ public class ServicoJDBC implements ServicoDao{
 
 	@Override
 	public Servico findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT S.SERVICO_ID, S.NOME, S.DESCRICAO, ts.TIPOSERVICO_ID, ts.NOME as tiposervico_nome "
+					+ "FROM SERVICO S " 
+					+ "INNER JOIN TIPO_SERVICO ts " 
+					+ "ON ts.TIPOSERVICO_ID = S.TIPOSERVICO_ID "
+					+ "WHERE s.SERVICO_ID = ? ");
+			st.setInt(1, id);
+			rs = st.executeQuery();
+
+			if(rs.next()) {
+				TipoServico tipoServico = new TipoServico();
+				tipoServico.setId(rs.getInt("tiposervico_id"));
+				tipoServico.setNome(rs.getString("tiposervico_nome"));
+				
+				Servico servico = new Servico();
+				servico.setId(rs.getInt("servico_id"));
+				servico.setNome(rs.getString("nome"));
+				servico.setDescricao(rs.getString("descricao"));
+				servico.setTipoServico(tipoServico);
+				return servico;
+			}
+			return null;
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	private Servico instantiateServico(ResultSet rs) throws SQLException {
@@ -80,7 +109,6 @@ public class ServicoJDBC implements ServicoDao{
 		servico.setId(rs.getInt("servico_id"));
 		servico.setNome(rs.getString("nome"));
 		servico.setDescricao(rs.getString("descricao"));
-		servico.setIdTipoServico(rs.getInt("tiposervico_id"));
 		return servico;
 	}
 	

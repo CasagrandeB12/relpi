@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,11 @@ public class ServicoService {
         return ResponseEntity.ok().body(service.findAll());
 	}
 	
-//	@GetMapping(value = "/{id}")
-//    public ResponseEntity<TipoServico> findById(@PathVariable Integer id){
-//    	TipoServico obj = service.findById(id);
-//        return ResponseEntity.ok().body(obj);
-//    }
+	@GetMapping(value = "/{id}")
+    public ResponseEntity<Servico> findById(@PathVariable Integer id){
+    	Servico obj = service.findById(id);
+        return ResponseEntity.ok().body(obj);
+    }
 	
     @PostMapping
     public ResponseEntity<Servico> insert(@RequestBody Servico obj){

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servico")
-public class Servico extends TipoServico implements Serializable{
+public class Servico implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,16 +20,17 @@ public class Servico extends TipoServico implements Serializable{
 	private Integer id;
 	private String nome;
 	private String descricao;
-	private Integer IdTipoServico;
+	
+	private TipoServico tipoServico;
 	
 	public Servico() {
 	}
-	
-	public Servico(Integer id, String nome, String descricao, TipoServico IdTipoServico) {
+
+	public Servico(Integer id, String nome, String descricao, TipoServico tipoServico) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.IdTipoServico = IdTipoServico.getId();
+		this.tipoServico = tipoServico;
 	}
 
 	public Integer getId() {
@@ -56,12 +57,12 @@ public class Servico extends TipoServico implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public Integer getIdTipoServico() {
-		return IdTipoServico;
+	public TipoServico getTipoServico() {
+		return tipoServico;
 	}
 
-	public void setIdTipoServico(Integer idTipoServico) {
-		IdTipoServico = idTipoServico;
+	public void setTipoServico(TipoServico tipoServico) {
+		this.tipoServico = tipoServico;
 	}
 
 	@Override
@@ -80,4 +81,12 @@ public class Servico extends TipoServico implements Serializable{
 		Servico other = (Servico) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Servico [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", tipoServico=" + tipoServico
+				+ "]";
+	}
+
+
 }

@@ -8,8 +8,11 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
+import br.com.unochapeco.model.dao.ServicoDao;
+import br.com.unochapeco.model.dao.ServicoDaoFactory;
 import br.com.unochapeco.model.dao.TipoServicoDao;
+import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
+import br.com.unochapeco.model.entities.Servico;
 import br.com.unochapeco.model.entities.TipoServico;
 import br.com.unochapeco.relpi.controller.db.DB;
 
@@ -24,9 +27,10 @@ public class RelpiApplication {
 		
 		TipoServicoDao tipoServicoDao = TipoServicoDaoFactory.createTipoServicoDao();
 		
-//		TipoServico newTipoServico = new TipoServico(2, "Cuidados Gerais");
+		ServicoDao servicoDao = ServicoDaoFactory.createServicoDao();
+		Servico servico = servicoDao.findById(1);
 //		tipoServicoDao.insert(newTipoServico);
-//		System.out.println("Inserido. Novo id = " + newTipoServico.getId());
+		System.out.println(servico);
 //		
 //		newPais = paisDao.findById(1);
 //		newPais.setNome("Uruguai");
