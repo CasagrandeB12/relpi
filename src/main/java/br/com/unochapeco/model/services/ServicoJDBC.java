@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.unochapeco.model.dao.ServicoDao;
 import br.com.unochapeco.model.entities.Servico;
@@ -104,32 +106,53 @@ public class ServicoJDBC implements ServicoDao{
 		}
 	}
 
-	private Servico instantiateServico(ResultSet rs) throws SQLException {
-		Servico servico = new Servico();
-		servico.setId(rs.getInt("servico_id"));
-		servico.setNome(rs.getString("nome"));
-		servico.setDescricao(rs.getString("descricao"));
-		return servico;
-	}
-	
 	@Override
 	public List<Servico> findAll() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM SERVICO");
+			st = conn.prepareStatement("SELECT s.SERVICO_ID as servico_id ,s.NOME as nome, s.DESCRICAO as descricao,"
+					+ " ts.TIPOSERVICO_ID as tiposervico_id, ts.NOME as tiposervico_nome"
+					+ " FROM SERVICO s INNER JOIN TIPO_SERVICO ts"
+					+ " ON s.TIPOSERVICO_ID = ts.TIPOSERVICO_ID"
+					+ " ORDER BY s.NOME");
 			rs = st.executeQuery();
 
 			List<Servico> list = new ArrayList<>();
-
+			Map <Integer, TipoServico> map = new HashMap<>();
+			
 			while (rs.next()) {
-				Servico obj = instantiateServico(rs);
+
+				TipoServico tipoServico = map.get(rs.getInt("tiposervico_id"));
+			
+				if(tipoServico == null) {
+					tipoServico = instantiateTipoServico(rs);
+					map.put(rs.getInt("tiposervico_id"), tipoServico);
+				}
+
+				Servico obj = instantiateServico(rs, tipoServico);
 				list.add(obj);
 			}
 			return list;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}
+	}
+
+	private TipoServico instantiateTipoServico(ResultSet rs) throws SQLException {
+		TipoServico tipoServico = new TipoServico();
+		tipoServico.setId(rs.getInt("tiposervico_id"));
+		tipoServico.setNome(rs.getString("tiposervico_nome"));		
+		return tipoServico;
+	}
+	
+	private Servico instantiateServico(ResultSet rs, TipoServico tipoServico) throws SQLException {
+		Servico servico = new Servico();
+		servico.setId(rs.getInt("servico_id"));
+		servico.setNome(rs.getString("nome"));
+		servico.setDescricao(rs.getString("descricao"));
+		servico.setTipoServico(tipoServico);
+		return servico;
 	}
 
 	
