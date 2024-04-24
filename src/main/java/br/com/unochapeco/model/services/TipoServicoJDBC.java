@@ -98,7 +98,6 @@ public class TipoServicoJDBC implements TipoServicoDao {
 		finally {
 			DB.closeStatement(st);
 		}
-		
 	}
 
 	@Override
