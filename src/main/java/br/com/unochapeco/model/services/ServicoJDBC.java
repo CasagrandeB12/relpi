@@ -61,8 +61,25 @@ public class ServicoJDBC implements ServicoDao{
 
 	@Override
 	public void update(Servico obj, Integer id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE servico"
+					+ " SET nome = ?, descricao = ?"
+					+ " where servico_id = ?",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getDescricao());
+			st.setInt(3, obj.getId());
+			
+			st.executeUpdate();
+			
+		}catch(Exception e){
+			e.getMessage();
+		}finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -167,6 +184,4 @@ public class ServicoJDBC implements ServicoDao{
 		servico.setTipoServico(tipoServico);
 		return servico;
 	}
-
-	
 }
