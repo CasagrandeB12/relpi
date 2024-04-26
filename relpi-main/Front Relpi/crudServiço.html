@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviço - CRUD</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/crud.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles/rodape.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/img/Logo.svg">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="container">
+            <input type="checkbox" id="menu" class="container_botao">
+            <label for="menu">
+                <span class="cabecalho_menu-hamburguer container_imagem"></span>
+            </label>
+            <ul class="lista_menu">
+                <li class="lista_menu_item">
+                    <a href="#">Farmaceúticos</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Dentistas</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Medico geral</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Pediatra</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Dermatologista</a>
+                </li>
+            </ul>
+            <img class="container_imagem" src="img/Logo.svg" alt="Logo alura books">
+            <a href="index.html">
+                <h1 class="container_titulo"><b container_titulo_negrito>Relpi</b></h1>
+            </a>
+        </div>
+
+        <ul class="opcoes">
+            <input type="checkbox" id="opcoes_menu" class="opcoes_botao">
+            <label for="opcoes_menu">
+                <li class="opcoes_item">Categorias</li>
+            </label>
+
+            <ul class="lista_menu">
+                <li class="lista_menu_item">
+                    <a href="#">Farmaceúticos</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Dentistas</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Medico geral</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Pediatra</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="#">Dermatologista</a>
+                </li>
+            </ul>
+        </ul>
+
+
+        <ul class="opcoes">
+            <input type="checkbox" id="opcoes_menu1" class="opcoes_botao">
+            <label for="opcoes_menu1">
+                <li class="opcoes_item">CADASTROS</li>
+            </label>
+
+            <ul class="lista_menu">
+                <li class="lista_menu_item">
+                    <a href="crudPessoas.html">Pessoas</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="crudServiço.html">Serviço</a>
+                </li>
+                <li class="lista_menu_item">
+                    <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
+                </li>
+            </ul>
+        </ul>
+
+        <div class="container">
+            <a href="#" class="container_link">
+                <img class="container_imagem" src="img/Usuário.svg" alt="Meu perfil">
+                <p class="container_texto">Meu perfil</p>
+            </a>
+        </div>
+    </header>
+    <main class="conteudo">
+        <div class="container_crud">
+            <div class="cadastroTipoDeServiço">Cadastro de Serviços</div>
+            <form class="filter-form">
+                <input id="nomeDoServiço" type="text" placeholder="Nome do serviço">
+                <input id="descrição" type="text" placeholder="Descrição">
+                <input id="id" type="text" placeholder="Código">
+                <button class="btn_cadastro btn_add">Adicionar</button>
+                <button class="btn_cadastro btn_buscar">Buscar</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome do serviço</th>
+                        <th>Descrição</th>
+                        <th>Código do serviço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    <tr>
+                        <td>Exemplo</td>
+                        <td>.........</td>
+                        <td>124</td>
+                        <td>
+                            <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>          
+        </div>
+    </main>
+    <footer class="rodape">
+        <h2 class="rodape_titulo">Abex IV - 2024</h2>
+    </footer>
+
+    <script src="crudServiço.js"></script>
+</body>
+</html>

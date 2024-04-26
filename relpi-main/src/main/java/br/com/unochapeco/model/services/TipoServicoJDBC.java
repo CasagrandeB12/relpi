@@ -118,13 +118,6 @@ public class TipoServicoJDBC implements TipoServicoDao {
 			throw new DbException(e.getMessage());
 		}
 	}
-	
-	public TipoServico instantiateTipoServico(ResultSet rs) throws SQLException {
-		TipoServico tipoServico = new TipoServico();
-		tipoServico.setId(rs.getInt("tiposervico_id"));
-		tipoServico.setNome(rs.getString("nome"));
-		return tipoServico;
-	}
 
 	@Override
 	public List<TipoServico> findAll() {
@@ -145,5 +138,11 @@ public class TipoServicoJDBC implements TipoServicoDao {
 			throw new DbException(e.getMessage());
 		}
 	}
-
+	
+	public TipoServico instantiateTipoServico(ResultSet rs) throws SQLException {
+		TipoServico tipoServico = new TipoServico();
+		tipoServico.setId(rs.getInt("tiposervico_id"));
+		tipoServico.setNome(rs.getString("nome"));
+		return tipoServico;
+	}
 }

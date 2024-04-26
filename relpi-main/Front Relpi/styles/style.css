@@ -1,0 +1,13 @@
+:root {
+    --cor-de-fundo: #ebecee;
+    --fonte-principal: "Poppins";
+    --fonte-secundaria:"Josefin Sans";
+}
+
+body{
+    background-color: var(--cor-de-fundo);
+    font-family: var(--fonte-principal);
+    font-size: 16px;
+    font-weight: 400;
+}
+
