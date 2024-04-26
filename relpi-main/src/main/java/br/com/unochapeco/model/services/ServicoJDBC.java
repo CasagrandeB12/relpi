@@ -116,15 +116,8 @@ public class ServicoJDBC implements ServicoDao{
 			rs = st.executeQuery();
 
 			if(rs.next()) {
-				TipoServico tipoServico = new TipoServico();
-				tipoServico.setId(rs.getInt("tiposervico_id"));
-				tipoServico.setNome(rs.getString("tiposervico_nome"));
-				
-				Servico servico = new Servico();
-				servico.setId(rs.getInt("servico_id"));
-				servico.setNome(rs.getString("nome"));
-				servico.setDescricao(rs.getString("descricao"));
-				servico.setTipoServico(tipoServico);
+				TipoServico tipoServico = instantiateTipoServico(rs);
+				Servico servico = instantiateServico(rs, tipoServico);
 				return servico;
 			}
 			return null;

@@ -39,8 +39,25 @@ public class PaisJDBC implements PaisDao{
 
 	@Override
 	public Pais findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT p.PAIS_ID ,p.NOME"
+					+ " FROM pais p"
+					+ " WHERE p.PAIS_ID = ?");
+			
+			st.setInt(1, id);
+			rs = st.executeQuery();
+		
+			if(rs.next()) {
+				Pais obj = instatiatePais(rs); 
+				return obj;
+			}
+			return null;
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
 	}
 
 	@Override
