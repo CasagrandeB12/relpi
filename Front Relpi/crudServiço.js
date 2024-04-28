@@ -1,99 +1,87 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Variável global para armazenar o contador de código de serviço
-    let codigoServico = 1;
+    // Função para carregar os registros da tabela a partir do backend
+    function loadRecords() {
+        fetch('http://localhost:8080/servico')
+            .then(response => response.json())
+            .then(records => {
+                const userList = document.getElementById('user-list').querySelector('tbody');
+                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os novos registros
 
-    // Adicione um evento de clique ao botão de adicionar
-    document.querySelector('.btn_add').addEventListener('click', function(event) {
-        event.preventDefault(); // Evite que o formulário seja enviado
+                records.forEach(record => {
+                    const newRow = createUserRow(record);
+                    userList.appendChild(newRow);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+    }
 
-        // Obtenha os valores dos campos do formulário
-        const nomeInput = document.getElementById('nomeDoServiço').value;
-        const descricaoInput = document.getElementById('descrição').value;
-
-        // Verifique se os campos nome do serviço e descrição estão vazios
-        if (nomeInput.trim() === '' || descricaoInput.trim() === '') {
-            alert('Por favor, preencha todos os campos.');
-            return; // Saia da função se algum campo estiver vazio
-        }
-
-        // Crie uma nova linha na tabela para os novos dados
+    // Função para criar uma nova linha na tabela com os dados de um registro
+    function createUserRow(record) {
         const newRow = document.createElement('tr');
-
-        // Adicione células para cada dado do formulário
         newRow.innerHTML = `
-            <td>${nomeInput}</td>
-            <td>${descricaoInput}</td>
-            <td>${codigoServico}</td>
+            <td>${record.nome}</td>
+            <td>${record.descricao}</td>
+            <td>${record.codigoServico}</td>
             <td>
                 <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
+        return newRow;
+    }
 
-        // Incremente o contador de código de serviço
-        codigoServico++;
+    // Evento de clique no botão de adicionar
+    document.querySelector('.btn_add').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita que o formulário seja enviado
 
-        // Adicione a nova linha à tabela
-        document.getElementById('user-list').appendChild(newRow);
+        const nomeInput = document.getElementById('nomeDoServiço').value;
+        const descricaoInput = document.getElementById('descrição').value;
 
-        // Limpe os campos do formulário após adicionar os dados
-        document.querySelector('.filter-form').reset();
+        // Envia os dados para o backend criar um novo registro
+        fetch('http://localhost:8080/servico', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome: nomeInput,
+                descricao: descricaoInput
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se o registro for criado com sucesso, recarrega os registros na tabela
+                loadRecords();
+                document.querySelector('.filter-form').reset();
+            } else {
+                throw new Error('Erro ao adicionar registro');
+            }
+        })
+        .catch(error => console.error(error));
     });
 
-    // Adicione um evento de clique ao botão de busca
+    // Evento de clique no botão de buscar
     document.querySelector('.btn_buscar').addEventListener('click', function(event) {
-        event.preventDefault(); // Evite que o formulário seja enviado
+        event.preventDefault(); // Evita que o formulário seja enviado
 
-        // Obtenha os campos de entrada do formulário
-        const nomeInput = document.getElementById('nomeDoServiço').value.toLowerCase();
-        const descricaoInput = document.getElementById('descrição').value.toLowerCase();
-        const idInput = document.getElementById('id').value.toLowerCase();
+        const nomeInput = document.getElementById('nomeFilter').value.toLowerCase();
 
-        // Obtenha todas as linhas da tabela
-        const rows = document.querySelectorAll('#user-list tr');
+        // Envia os critérios de busca para o backend
+        fetch(`http://localhost:8080/servico?nome=${nomeInput}`)
+            .then(response => response.json())
+            .then(records => {
+                const userList = document.getElementById('user-list').querySelector('tbody');
+                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os registros filtrados
 
-        // Itere sobre todas as linhas da tabela
-        rows.forEach(function(row) {
-            // Obtenha os valores de cada célula da linha
-            const nome = row.cells[0].textContent.toLowerCase();
-            const descricao = row.cells[1].textContent.toLowerCase();
-            const id = row.cells[2].textContent.toLowerCase();
-
-            // Verifique se algum dos valores da linha corresponde aos critérios de busca
-            const match = (!nomeInput || nome.includes(nomeInput)) &&
-                          (!descricaoInput || descricao.includes(descricaoInput)) &&
-                          (!idInput || id.includes(idInput));
-
-            // Oculte ou exiba a linha com base no resultado da correspondência
-            row.style.display = match ? '' : 'none';
-        });
-
-        // Crie um botão de limpar filtros se ainda não existir
-        const clearFiltersButton = document.getElementById('clear-filters-button');
-        if (!clearFiltersButton) {
-            const filterForm = document.querySelector('.filter-form');
-            const clearButton = document.createElement('button');
-            clearButton.textContent = 'Limpar Filtros';
-            clearButton.id = 'clear-filters-button';
-            clearButton.classList.add('btn_clear', 'btn_cadastro');
-            clearButton.addEventListener('click', function() {
-                // Limpe os campos de entrada
-                document.getElementById('nomeDoServiço').value = '';
-                document.getElementById('descrição').value = '';
-                document.getElementById('id').value = '';
-                // Reaplique os filtros
-                rows.forEach(function(row) {
-                    row.style.display = '';
+                records.forEach(record => {
+                    const newRow = createUserRow(record);
+                    userList.appendChild(newRow);
                 });
-
-                // Remova o botão de limpar filtros
-                clearButton.remove();
-            });
-            filterForm.appendChild(clearButton);
-        }
+            })
+            .catch(error => console.error('Erro ao buscar registros:', error));
     });
 
-    // Adicione um evento de clique aos botões de lápis na tabela
+    // Evento de clique nos botões de lápis na tabela
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_pencil') || event.target.classList.contains('fa-pencil')) {
             const row = event.target.closest('tr');
@@ -105,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Adicione um evento de clique aos botões de apagar na tabela
+    // Evento de clique nos botões de apagar na tabela
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
@@ -113,4 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             row.remove();
         }
     });
+
+    // Carrega os registros ao carregar a página
+    loadRecords();
 });

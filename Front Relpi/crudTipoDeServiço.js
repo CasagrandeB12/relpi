@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
     
 
     // Função para carregar os registros da tabela a partir do backend
@@ -42,6 +43,47 @@ document.addEventListener('DOMContentLoaded', function() {
         const nomeInput = document.getElementById('nomeDoServiço').value;
         const idInput = document.getElementById('id').value;
     
+=======
+    const baseURL = 'http://localhost:8080/servico'; // URL base do backend
+
+    // Função para carregar os registros da tabela a partir do backend
+    function loadRecords() {
+        fetch(`${baseURL}/servico`)
+            .then(response => response.json())
+            .then(records => {
+                const userList = document.getElementById('user-list').querySelector('tbody');
+                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os novos registros
+
+                records.forEach(record => {
+                    const newRow = createUserRow(record);
+                    userList.appendChild(newRow);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+    }
+
+    // Função para criar uma nova linha na tabela com os dados de um registro
+    function createUserRow(record) {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${record.nome}</td>
+            <td>${record.codigoServico}</td>
+            <td>
+                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+            </td>
+        `;
+        return newRow;
+    }
+
+    // Evento de clique no botão de adicionar
+    document.querySelector('.btn_add').addEventListener('click', function(event) {
+        event.preventDefault(); // Evite que o formulário seja enviado
+
+        // Obtenha os valores dos campos do formulário
+        const nomeInput = document.getElementById('nomeDoServiço').value;
+
+>>>>>>> 9b4c592a7f2db181d6ac42bac83d0091b2a1f533
         // Verifique se os campos estão vazios
         if (nomeInput.trim() === '') {
             alert('Por favor, preencha todos os campos.');
@@ -49,13 +91,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Envia os dados para o backend criar um novo registro
+<<<<<<< HEAD
         fetch(`http://localhost:8080/tipo_servico/novo`, {
+=======
+        fetch(`${baseURL}/servico`, {
+>>>>>>> 9b4c592a7f2db181d6ac42bac83d0091b2a1f533
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+<<<<<<< HEAD
                 id: idInput,
+=======
+>>>>>>> 9b4c592a7f2db181d6ac42bac83d0091b2a1f533
                 nome: nomeInput
             })
         })
@@ -89,7 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = event.target.closest('tr');
             const id = row.cells[1].textContent; // Assumindo que o ID está na segunda coluna
             // Remove a linha da tabela
+<<<<<<< HEAD
             fetch(`http://localhost:8080/tipo_servico/${id}`, {
+=======
+            fetch(`${baseURL}/servico/${id}`, {
+>>>>>>> 9b4c592a7f2db181d6ac42bac83d0091b2a1f533
                 method: 'DELETE'
             })
             .then(response => {
@@ -104,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+<<<<<<< HEAD
         // Evento de clique no botão de buscar
         document.querySelector('.btn_buscar').addEventListener('click', function(event) {
             event.preventDefault();
@@ -147,6 +201,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+=======
+>>>>>>> 9b4c592a7f2db181d6ac42bac83d0091b2a1f533
     // Carrega os registros ao carregar a página
     loadRecords();
 });
