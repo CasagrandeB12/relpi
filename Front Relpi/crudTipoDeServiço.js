@@ -1,110 +1,152 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Variável global para armazenar o contador de código de serviço
-    let codigoServico = 1;
+    
 
-    // Adicione um evento de clique ao botão de adicionar
+    // Função para carregar os registros da tabela a partir do backend
+    function loadRecords() {
+        fetch(`http://localhost:8080/tipo_servico/todos`)
+            .then(response => response.json())
+            .then(records => {
+                const userList = document.getElementById('user-list');
+                if (userList) {
+                    userList.innerHTML = '';
+                } else {
+                    console.error(" 'user-list' não encontrado.");
+                }
+                records.forEach(record => {
+                    const newRow = createUserRow(record);
+                    userList.appendChild(newRow);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+    }
+
+    // Função para criar uma nova linha na tabela com os dados de um registro
+    function createUserRow(record) {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${record.nome}</td>
+            <td>${record.id}</td>
+            <td>
+                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+            </td>
+        `;
+        return newRow;
+    }
+
+    // Evento de clique no botão de adicionar
     document.querySelector('.btn_add').addEventListener('click', function(event) {
         event.preventDefault(); // Evite que o formulário seja enviado
 
         // Obtenha os valores dos campos do formulário
         const nomeInput = document.getElementById('nomeDoServiço').value;
         const idInput = document.getElementById('id').value;
-
-        // Verifique se os campos nome do serviço e descrição estão vazios
+    
+        // Verifique se os campos estão vazios
         if (nomeInput.trim() === '') {
             alert('Por favor, preencha todos os campos.');
-            return; // Saia da função se algum campo estiver vazio
+            return;
         }
 
-        // Crie uma nova linha na tabela para os novos dados
-        const newRow = document.createElement('tr');
-
-        // Adicione células para cada dado do formulário
-        newRow.innerHTML = `
-            <td>${nomeInput}</td>
-            <td>${codigoServico}</td>
-            <td>
-                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
-            </td>
-        `;
-
-        // Incremente o contador de código de serviço
-        codigoServico++;
-
-        // Adicione a nova linha à tabela
-        document.getElementById('user-list').appendChild(newRow);
-
-        // Limpe os campos do formulário após adicionar os dados
-        document.querySelector('.filter-form').reset();
+        // Envia os dados para o backend criar um novo registro
+        fetch(`http://localhost:8080/tipo_servico/novo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: idInput,
+                nome: nomeInput
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se o registro for criado com sucesso, recarrega os registros na tabela
+                loadRecords();
+                document.querySelector('.filter-form').reset();
+            } else {
+                throw new Error('Erro ao adicionar registro');
+            }
+        })
+        .catch(error => console.error(error));
     });
 
-    // Adicione um evento de clique ao botão de busca
-    document.querySelector('.btn_buscar').addEventListener('click', function(event) {
-        event.preventDefault(); // Evite que o formulário seja enviado
-
-        // Obtenha os campos de entrada do formulário
-        const nomeInput = document.getElementById('nomeDoServiço').value.toLowerCase();
-        const idInput = document.getElementById('id').value.toLowerCase();
-
-        // Obtenha todas as linhas da tabela
-        const rows = document.querySelectorAll('#user-list tr');
-
-        // Itere sobre todas as linhas da tabela
-        rows.forEach(function(row) {
-            // Obtenha os valores de cada célula da linha
-            const nome = row.cells[0].textContent.toLowerCase();
-            const id = row.cells[1].textContent.toLowerCase();
-
-            // Verifique se algum dos valores da linha corresponde aos critérios de busca
-            const match = (!nomeInput || nome.includes(nomeInput)) &&
-                          (!idInput || id.includes(idInput));
-
-            // Oculte ou exiba a linha com base no resultado da correspondência
-            row.style.display = match ? '' : 'none';
-        });
-
-        // Crie um botão de limpar filtros se ainda não existir
-        const clearFiltersButton = document.getElementById('clear-filters-button');
-        if (!clearFiltersButton) {
-            const filterForm = document.querySelector('.filter-form');
-            const clearButton = document.createElement('button');
-            clearButton.textContent = 'Limpar Filtros';
-            clearButton.id = 'clear-filters-button';
-            clearButton.classList.add('btn_clear', 'btn_cadastro');
-            clearButton.addEventListener('click', function() {
-                // Limpe os campos de entrada
-                document.getElementById('nomeDoServiço').value = '';
-                document.getElementById('id').value = '';
-                // Reaplique os filtros
-                rows.forEach(function(row) {
-                    row.style.display = '';
-                });
-
-                // Remova o botão de limpar filtros
-                clearButton.remove();
-            });
-            filterForm.appendChild(clearButton);
-        }
-    });
-
-    // Adicione um evento de clique aos botões de lápis na tabela
+    // Evento de clique aos botões de lápis na tabela
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_pencil') || event.target.classList.contains('fa-pencil')) {
             const row = event.target.closest('tr');
             // Preencha os campos do formulário com os dados da linha
             document.getElementById('nomeDoServiço').value = row.cells[0].textContent;
+            document.getElementById('id').value = row.cells[1].textContent;
             // Remova a linha da tabela
             row.remove();
         }
     });
 
-    // Adicione um evento de clique aos botões de apagar na tabela
+    // Evento de clique aos botões de apagar na tabela
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
+            const id = row.cells[1].textContent; // Assumindo que o ID está na segunda coluna
             // Remove a linha da tabela
-            row.remove();
+            fetch(`http://localhost:8080/tipo_servico/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Se o registro for excluído com sucesso, recarrega os registros na tabela
+                    loadRecords();
+                } else {
+                    throw new Error('Erro ao excluir registro');
+                }
+            })
+            .catch(error => console.error(error));
         }
     });
+
+        // Evento de clique no botão de buscar
+        document.querySelector('.btn_buscar').addEventListener('click', function(event) {
+            event.preventDefault();
+    
+            const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
+            const idInput = document.getElementById('id');
+    
+            const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
+            const idBusca = idInput.value.toLowerCase();
+
+    
+            const rows = document.querySelectorAll('#user-list tr');
+    
+            rows.forEach(function(row) {
+                const nome = row.cells[0].textContent.toLowerCase();
+                const id = row.cells[1].textContent.toLowerCase();
+    
+                const match = (!nomeBusca || nome.includes(nomeBusca)) &&
+                              (!idBusca || id.includes(idBusca));
+    
+                row.style.display = match ? '' : 'none';
+            });
+    
+            const clearFiltersButton = document.getElementById('clear-filters-button');
+            if (!clearFiltersButton) {
+                const filterForm = document.getElementById('formPessoas');
+                const clearButton = document.createElement('button');
+                clearButton.textContent = 'Limpar Filtros';
+                clearButton.id = 'clear-filters-button';
+                clearButton.classList.add('btn_clear', 'btn_cadastro');
+                clearButton.addEventListener('click', function() {
+                    nomeDoServiçoInput.value = '';
+                    idInput.value = '';
+    
+                    rows.forEach(function(row) {
+                        row.style.display = '';
+                    });
+                    clearButton.remove();
+                });
+                filterForm.appendChild(clearButton);
+            }
+        });
+
+    // Carrega os registros ao carregar a página
+    loadRecords();
 });

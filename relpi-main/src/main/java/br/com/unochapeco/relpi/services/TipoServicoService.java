@@ -3,6 +3,7 @@ package br.com.unochapeco.relpi.services;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,17 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
 import br.com.unochapeco.model.dao.TipoServicoDao;
+import br.com.unochapeco.model.dao.TipoServicoDaoFactory;
 import br.com.unochapeco.model.entities.TipoServico;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/tipo_servico")
 public class TipoServicoService {
 	
 	TipoServicoDao service = TipoServicoDaoFactory.createTipoServicoDao();
 	
-    @GetMapping
+    @GetMapping("/todos")
     public ResponseEntity<List<TipoServico>> findAll() {
         return ResponseEntity.ok().body(service.findAll());
 	}
@@ -33,7 +35,7 @@ public class TipoServicoService {
         return ResponseEntity.ok().body(obj);
     }
     
-    @PostMapping
+    @PostMapping("/novo")
     public ResponseEntity<TipoServico> insert(@RequestBody TipoServico obj){
     	service.insert(obj);
         return ResponseEntity.ok().body(obj);
