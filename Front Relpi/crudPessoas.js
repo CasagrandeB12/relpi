@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('formPessoas');
-    const userList = document.getElementById('user-list');
-
-    // Função para carregar os registros da tabela a partir do backend
     function loadRecords() {
-        fetch('http://localhost:8080/pessoas')
+        fetch(`http://localhost:8080/pessoas/todos`)
             .then(response => response.json())
             .then(records => {
-                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os novos registros
-
+                const userList = document.getElementById('user-list');
+                if (userList) {
+                    userList.innerHTML = '';
+                } else {
+                    console.error(" 'user-list' não encontrado.");
+                }
                 records.forEach(record => {
                     const newRow = createUserRow(record);
                     userList.appendChild(newRow);
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>${record.nome}</td>
-            <td>${record.CPF}</td>
+            <td>${record.cpf}</td>
             <td>${record.rg}</td>
             <td>${record.genero}</td>
             <td>${record.data}</td>
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${record.telefone}</td>
             <td>
                 <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                <button class="btn_action_erase" data-id="${record.id}"><i class="fa-solid fa-xmark"></i></button>
+                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
         return newRow;
@@ -39,49 +40,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Carrega os registros ao carregar a página
     loadRecords();
 
-    form.addEventListener('click', function(event) {
-        if (event.target.classList.contains('btn_add')) {
-            event.preventDefault();
+    document.querySelector('.btn_add').addEventListener('click', function(event) {
+        event.preventDefault(); // Evite que o formulário seja enviado
 
-            if (!form.checkValidity()) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            const nameInput = document.getElementById('nome').value;
-            const cpfInput = document.getElementById('CPF').value;
-            const rgInput = document.getElementById('rg').value;
-            const generoInput = document.getElementById('genero').value;
-            const dataInput = document.getElementById('data').value;
-            const emailInput = document.getElementById('email').value;
-            const telefoneInput = document.getElementById('telefone').value;
-
-            fetch('http://localhost:8080/pessoas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nome: nameInput,
-                    CPF: cpfInput,
-                    rg: rgInput,
-                    genero: generoInput,
-                    data: dataInput,
-                    email: emailInput,
-                    telefone: telefoneInput
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Se o registro for criado com sucesso, recarrega os registros na tabela
-                    loadRecords();
-                    form.reset();
-                } else {
-                    throw new Error('Erro ao adicionar registro');
-                }
-            })
-            .catch(error => console.error(error));
+        // Obtenha os valores dos campos do formulário
+        const nomeInput = document.getElementById('nomeDoServiço').value;
+        const cpfInput = document.getElementById('cpf').value;
+        const rgInput = document.getElementById('rg').value;
+        const generoInput = document.getElementById('genero').value;
+        const dataInput = document.getElementById('data').value;
+        const emailInput = document.getElementById('email').value;
+        const telefoneInput = document.getElementById('telefone').value;
+    
+        // Verifique se os campos estão vazios
+        if (nomeInput.trim() === '') {
+            alert('Por favor, preencha todos os campos.');
+            return;
         }
+
+        // Envia os dados para o backend criar um novo registro
+        fetch(`http://localhost:8080/pessoas/novo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome: nomeInput,
+                CPF: cpfInput,
+                rg: rgInput,
+                genero: generoInput,
+                data: dataInput,
+                email: emailInput,
+                telefone: telefoneInput
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se o registro for criado com sucesso, recarrega os registros na tabela
+                loadRecords();
+                document.querySelector('.filter-form').reset();
+            } else {
+                throw new Error('Erro ao adicionar registro');
+            }
+        })
+        .catch(error => console.error(error));
     });
 
     userList.addEventListener('click', function(event) {
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = event.target.closest('tr');
 
             document.getElementById('nome').value = row.cells[0].textContent;
-            document.getElementById('CPF').value = row.cells[1].textContent;
+            document.getElementById('cpf').value = row.cells[1].textContent;
             document.getElementById('rg').value = row.cells[2].textContent;
             document.getElementById('genero').value = row.cells[3].textContent;
             document.getElementById('data').value = row.cells[4].textContent;
@@ -103,9 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
     userList.addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase')) {
             const row = event.target.closest('tr');
-            const userId = event.target.dataset.id; // ID do usuário a ser excluído
+            const id = row.cells[1].textContent; // ID do usuário a ser excluído
 
-            fetch(`http://localhost:8080/pessoas/${userId}`, {
+            fetch(`http://localhost:8080/pessoas/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -124,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const nomeInput = document.getElementById('nome');
-        const cpfInput = document.getElementById('CPF');
+        const cpfInput = document.getElementById('cpf');
         const rgInput = document.getElementById('rg');
         const generoInput = document.getElementById('genero');
         const dataInput = document.getElementById('data');
