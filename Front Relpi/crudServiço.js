@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Função para carregar os registros da tabela a partir do backend
     function loadRecords() {
-        fetch('http://localhost:8080/servico')
+        fetch('http://localhost:8080/servico/todos')
             .then(response => response.json())
             .then(records => {
-                const userList = document.getElementById('user-list').querySelector('tbody');
-                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os novos registros
-
+                const userList = document.getElementById('user-list');
+                if (userList) {
+                    userList.innerHTML = '';
+                } else {
+                    console.error(" 'user-list' não encontrado.");
+                }
                 records.forEach(record => {
                     const newRow = createUserRow(record);
                     userList.appendChild(newRow);
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const descricaoInput = document.getElementById('descrição').value;
 
         // Envia os dados para o backend criar um novo registro
-        fetch('http://localhost:8080/servico', {
+        fetch('http://localhost:8080/servico/novo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,23 +65,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Evento de clique no botão de buscar
     document.querySelector('.btn_buscar').addEventListener('click', function(event) {
-        event.preventDefault(); // Evita que o formulário seja enviado
+        event.preventDefault();
 
-        const nomeInput = document.getElementById('nomeFilter').value.toLowerCase();
+        const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
+        const descricaoInput = document.getElementById('descrição');
 
-        // Envia os critérios de busca para o backend
-        fetch(`http://localhost:8080/servico?nome=${nomeInput}`)
-            .then(response => response.json())
-            .then(records => {
-                const userList = document.getElementById('user-list').querySelector('tbody');
-                userList.innerHTML = ''; // Limpa a tabela antes de adicionar os registros filtrados
+        const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
+        const descricaoBusca = descricaoInput.value.toLowerCase();
 
-                records.forEach(record => {
-                    const newRow = createUserRow(record);
-                    userList.appendChild(newRow);
+
+        const rows = document.querySelectorAll('#user-list tr');
+
+        rows.forEach(function(row) {
+            const nome = row.cells[0].textContent.toLowerCase();
+            const descricao = row.cells[1].textContent.toLowerCase();
+
+            const match = (!nomeBusca || nome.includes(nomeBusca)) &&
+                          (!descricaoBusca || descricao.includes(descricaoBusca));
+
+            row.style.display = match ? '' : 'none';
+        });
+
+        const clearFiltersButton = document.getElementById('clear-filters-button');
+        if (!clearFiltersButton) {
+            const filterForm = document.getElementById('formPessoas');
+            const clearButton = document.createElement('button');
+            clearButton.textContent = 'Limpar Filtros';
+            clearButton.id = 'clear-filters-button';
+            clearButton.classList.add('btn_clear', 'btn_cadastro');
+            clearButton.addEventListener('click', function() {
+                nomeDoServiçoInput.value = '';
+                idInput.value = '';
+
+                rows.forEach(function(row) {
+                    row.style.display = '';
                 });
-            })
-            .catch(error => console.error('Erro ao buscar registros:', error));
+                clearButton.remove();
+            });
+            filterForm.appendChild(clearButton);
+        }
     });
 
     // Evento de clique nos botões de lápis na tabela
@@ -92,13 +117,25 @@ document.addEventListener('DOMContentLoaded', function() {
             row.remove();
         }
     });
-
-    // Evento de clique nos botões de apagar na tabela
+    
+    //remove
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
+            const id = row.cells[1].textContent; // Assumindo que o ID está na segunda coluna
             // Remove a linha da tabela
-            row.remove();
+            fetch(`http://localhost:8080/servico/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Se o registro for excluído com sucesso, recarrega os registros na tabela
+                    loadRecords();
+                } else {
+                    throw new Error('Erro ao excluir registro');
+                }
+            })
+            .catch(error => console.error(error));
         }
     });
 
