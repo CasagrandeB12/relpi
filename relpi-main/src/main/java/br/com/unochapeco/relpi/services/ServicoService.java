@@ -22,7 +22,7 @@ public class ServicoService {
 
 	ServicoDao service = ServicoDaoFactory.createServicoDao();
 	
-	@GetMapping
+	@GetMapping("/todos")
     public ResponseEntity<List<Servico>> findAll() {
         return ResponseEntity.ok().body(service.findAll());
 	}
@@ -33,7 +33,7 @@ public class ServicoService {
         return ResponseEntity.ok().body(obj);
     }
 	
-    @PostMapping
+    @PostMapping("/novo")
     public ResponseEntity<Servico> insert(@RequestBody Servico obj){
     	service.insert(obj);
         return ResponseEntity.ok().body(obj);

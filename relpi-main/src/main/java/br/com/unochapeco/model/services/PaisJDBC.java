@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.unochapeco.model.dao.PaisDao;
 import br.com.unochapeco.model.entities.Pais;
+import br.com.unochapeco.relpi.controller.db.DB;
 import br.com.unochapeco.relpi.controller.db.DbException;
 
 public class PaisJDBC implements PaisDao{
@@ -21,8 +23,35 @@ public class PaisJDBC implements PaisDao{
 
 	@Override
 	public void insert(Pais obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"INSERT INTO pais"
+					+ " (pais_id, nome)"
+					+ " VALUES "
+					+ " (?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, obj.getId());
+			st.setString(2, obj.getNome());
+			
+			int rowsAffected = st.executeUpdate();	
+			if(rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(null);
+			}else {
+				throw new DbException("Nenhuma linha foi alterada!");
+			}
+		}catch(SQLException e){
+			e.getMessage();
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
