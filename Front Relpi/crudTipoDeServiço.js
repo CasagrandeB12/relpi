@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${record.nome}</td>
             <td>${record.id}</td>
             <td>
-                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
+        //<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
         return newRow;
     }
 

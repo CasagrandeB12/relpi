@@ -50,15 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function createUserRow(record) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${record.nomeDoServiço}</td>
-            <td>${record.descrição}</td>
+            <td>${record.nome}</td>
+            <td>${record.descricao}</td>
             <td>${record.id}</td>
-            <td>${record.idTipoDeServiço}</td>
+            <td>${record.tipoServico.id}</td>
             <td>
-                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
+
+        //<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
         return newRow;
     }
 
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const idTipoDeServiçoInput = document.getElementById('idTipoDeServiço').value;
 
         // Verifique se os campos estão vazios
-        if (nomeInput.trim() === '' || tipoServicoInput.trim() === '') {
+        if (nomeInput.trim() === '') {
             alert('Por favor, preencha todos os campos e selecione um tipo de serviço.');
             return;
         }
@@ -85,10 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                id: idInput,
                 nome: nomeInput,
                 descricao: descricaoInput,
-                id: idInput,
-                idTipoDeServiço: idTipoDeServiçoInput
+                tipoServico: idTipoDeServiçoInput
                 //tipoServicoId: tipoServicoInput // Envie o ID do tipo de serviço selecionado
             })
         })
