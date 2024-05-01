@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Erro ao carregar registros:', error));
     }
 
-    // Função para carregar os tipos de serviço disponíveis
+    /* Função para carregar os tipos de serviço disponíveis
     function loadServiceTypes() {
         fetch('http://localhost:8080/tipo_servico/todos')
             .then(response => response.json())
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => console.error('Erro ao carregar tipos de serviço:', error));
-    }
+    }*/
 
     // Função para criar uma nova linha na tabela com os dados de um registro
     function createUserRow(record) {
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${record.nome}</td>
             <td>${record.descricao}</td>
             <td>${record.id}</td>
-            <td>${record.tipoServico.nome}</td> <!-- Aqui exibimos o nome do tipo de serviço -->
             <td>
                 <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obtenha os valores dos campos do formulário
         const nomeInput = document.getElementById('nomeDoServiço').value;
         const descricaoInput = document.getElementById('descrição').value;
-        const tipoServicoInput = document.getElementById('idTipoDeServiço').value; // Obtenha o tipo de serviço selecionado
+        //const tipoServicoInput = document.getElementById('idTipoDeServiço').value; // Obtenha o tipo de serviço selecionado
         const idInput = document.getElementById('id').value;
 
         // Verifique se os campos estão vazios
@@ -87,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({
                 nome: nomeInput,
                 descricao: descricaoInput,
-                id: idInput,
-                tipoServicoId: tipoServicoInput // Envie o ID do tipo de serviço selecionado
+                id: idInput
+                //tipoServicoId: tipoServicoInput // Envie o ID do tipo de serviço selecionado
             })
         })
         .then(response => {
@@ -129,12 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
             const descriçãoInput = document.getElementById('descrição');
-            const idTipoDeServicoInput = document.getElementById('idTipoDeServiço');
+            //const idTipoDeServicoInput = document.getElementById('idTipoDeServiço');
             const idInput = document.getElementById('id');
     
             const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
             const descriçãoBusca = descriçãoInput.value.toLowerCase();
-            const idTipoDeServicoBusca = idTipoDeServicoInput.value.toLowerCase();
+            //const idTipoDeServicoBusca = idTipoDeServicoInput.value.toLowerCase();
             const idBusca = idInput.value.toLowerCase();
 
     
@@ -143,12 +142,12 @@ document.addEventListener('DOMContentLoaded', function() {
             rows.forEach(function(row) {
                 const nome = row.cells[0].textContent.toLowerCase();
                 const descricao = row.cells[1].textContent.toLowerCase();
-                const idTipoDeServico = row.cells[2].textContent.toLowerCase();
-                const id = row.cells[3].textContent.toLowerCase();
+                //const idTipoDeServico = row.cells[2].textContent.toLowerCase();
+                const id = row.cells[2].textContent.toLowerCase();
     
                 const match = (!nomeBusca || nome.includes(nomeBusca)) &&
                               (!descriçãoBusca || descricao.includes(descriçãoBusca)) &&
-                              (!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca)) &&
+                              //(!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca)) &&
                               (!idBusca || id.includes(idBusca));
 
     
@@ -204,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     nomeDoServico: document.getElementById('nomeDoServiço').value,
                     descricao: document.getElementById('descrição').value,
                     id: document.getElementById('id').value,
-                    idTipoDeServico: document.getElementById('idTipoDeServiço').value
+                    //idTipoDeServico: document.getElementById('idTipoDeServiço').value
                     
                 };
         
@@ -220,5 +219,5 @@ document.addEventListener('DOMContentLoaded', function() {
     loadRecords();
 
     // Carrega os tipos de serviço disponíveis ao carregar a página
-    loadServiceTypes();
+    //loadServiceTypes();
 });
