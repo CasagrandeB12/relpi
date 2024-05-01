@@ -86,18 +86,45 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error(error));
     });
 
-    userList.addEventListener('click', function(event) {
+    function updateRecord(id, newData) {
+        fetch(`http://localhost:8080/pessoas/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newData)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se o registro for atualizado com sucesso, recarrega os registros na tabela
+                loadRecords();
+            } else {
+                throw new Error('Erro ao atualizar registro');
+            }
+        })
+        .catch(error => console.error(error));
+    }
+    
+    // Evento de clique nos botões de lápis na tabela
+    document.getElementById('user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_pencil')) {
             const row = event.target.closest('tr');
-
-            document.getElementById('nome').value = row.cells[0].textContent;
-            document.getElementById('cpf').value = row.cells[1].textContent;
-            document.getElementById('rg').value = row.cells[2].textContent;
-            document.getElementById('genero').value = row.cells[3].textContent;
-            document.getElementById('data').value = row.cells[4].textContent;
-            document.getElementById('email').value = row.cells[5].textContent;
-            document.getElementById('telefone').value = row.cells[6].textContent;
-
+            const id = row.cells[0].textContent; // Assumindo que o ID está na primeira coluna
+    
+            const newData = {
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                rg: document.getElementById('rg').value,
+                genero: document.getElementById('genero').value,
+                data: document.getElementById('data').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value
+            };
+    
+            // Chama a função para atualizar o registro com os novos dados
+            updateRecord(id, newData);
+    
+            // Remove a linha da tabela
             row.remove();
         }
     });

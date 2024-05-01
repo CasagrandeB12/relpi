@@ -71,14 +71,40 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error(error));
     });
 
-    // Evento de clique aos botões de lápis na tabela
-    document.querySelector('#user-list').addEventListener('click', function(event) {
-        if (event.target.classList.contains('btn_action_pencil') || event.target.classList.contains('fa-pencil')) {
+    function updateRecord(id, newData) {
+        fetch(`http://localhost:8080/tipo_servico/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newData)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se o registro for atualizado com sucesso, recarrega os registros na tabela
+                loadRecords();
+            } else {
+                throw new Error('Erro ao atualizar registro');
+            }
+        })
+        .catch(error => console.error(error));
+    }
+    
+    // Evento de clique nos botões de lápis na tabela
+    document.getElementById('user-list').addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn_action_pencil')) {
             const row = event.target.closest('tr');
-            // Preencha os campos do formulário com os dados da linha
-            document.getElementById('nomeDoServiço').value = row.cells[0].textContent;
-            document.getElementById('id').value = row.cells[1].textContent;
-            // Remova a linha da tabela
+            const id = row.cells[1].textContent; // Assumindo que o ID está na primeira coluna
+    
+            const newData = {
+                nomeDoServico: document.getElementById('nomeDoServiço').value,
+                descricao: document.getElementById('id').value
+            };
+    
+            // Chama a função para atualizar o registro com os novos dados
+            updateRecord(id, newData);
+    
+            // Remove a linha da tabela
             row.remove();
         }
     });
