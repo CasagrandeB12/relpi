@@ -93,6 +93,11 @@
     width:100%
 }
 
+.swiper-slide img {
+    width: 9em;
+    height: 13em;
+}
+
 @media screen and (min-width: 1024px){
     .carrossel_titulo{
         font-size: 26px;
@@ -135,6 +140,10 @@
         margin-top: 5px; /* Adiciona um pequeno espaço entre a imagem e o texto */
     }
 
+    .swiper-slide img {
+        width: 16em;
+        height: 20em;
+    }
     
 }
 
@@ -182,5 +191,10 @@
     
     .imagem-container p {
         margin-top: 5px; /* Adiciona um pequeno espaço entre a imagem e o texto */
+    }
+
+    .swiper-slide img {
+        width: 30em;
+        height: 35em;
     }
 }

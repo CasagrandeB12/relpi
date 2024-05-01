@@ -50,9 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function createUserRow(record) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${record.nome}</td>
-            <td>${record.descricao}</td>
+            <td>${record.nomeDoServiço}</td>
+            <td>${record.descrição}</td>
             <td>${record.id}</td>
+            <td>${record.idTipoDeServiço}</td>
             <td>
                 <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
@@ -68,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obtenha os valores dos campos do formulário
         const nomeInput = document.getElementById('nomeDoServiço').value;
         const descricaoInput = document.getElementById('descrição').value;
-        //const tipoServicoInput = document.getElementById('idTipoDeServiço').value; // Obtenha o tipo de serviço selecionado
         const idInput = document.getElementById('id').value;
+        const idTipoDeServiçoInput = document.getElementById('idTipoDeServiço').value;
 
         // Verifique se os campos estão vazios
         if (nomeInput.trim() === '' || tipoServicoInput.trim() === '') {
@@ -86,7 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({
                 nome: nomeInput,
                 descricao: descricaoInput,
-                id: idInput
+                id: idInput,
+                idTipoDeServiço: idTipoDeServiçoInput
                 //tipoServicoId: tipoServicoInput // Envie o ID do tipo de serviço selecionado
             })
         })
@@ -105,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
-            const id = row.cells[1].textContent; // Assumindo que o ID está na segunda coluna
+            const id = row.cells[2].textContent; // Assumindo que o ID está na segunda coluna
             // Remove a linha da tabela
             fetch(`http://localhost:8080/servico/${id}`, {
                 method: 'DELETE'
@@ -128,12 +130,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
             const descriçãoInput = document.getElementById('descrição');
-            //const idTipoDeServicoInput = document.getElementById('idTipoDeServiço');
+            const idTipoDeServicoInput = document.getElementById('idTipoDeServiço');
             const idInput = document.getElementById('id');
     
             const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
             const descriçãoBusca = descriçãoInput.value.toLowerCase();
-            //const idTipoDeServicoBusca = idTipoDeServicoInput.value.toLowerCase();
+            const idTipoDeServicoBusca = idTipoDeServicoInput.value.toLowerCase();
             const idBusca = idInput.value.toLowerCase();
 
     
@@ -142,12 +144,12 @@ document.addEventListener('DOMContentLoaded', function() {
             rows.forEach(function(row) {
                 const nome = row.cells[0].textContent.toLowerCase();
                 const descricao = row.cells[1].textContent.toLowerCase();
-                //const idTipoDeServico = row.cells[2].textContent.toLowerCase();
+                const idTipoDeServico = row.cells[3].textContent.toLowerCase();
                 const id = row.cells[2].textContent.toLowerCase();
     
                 const match = (!nomeBusca || nome.includes(nomeBusca)) &&
                               (!descriçãoBusca || descricao.includes(descriçãoBusca)) &&
-                              //(!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca)) &&
+                              (!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca)) &&
                               (!idBusca || id.includes(idBusca));
 
     
@@ -203,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     nomeDoServico: document.getElementById('nomeDoServiço').value,
                     descricao: document.getElementById('descrição').value,
                     id: document.getElementById('id').value,
-                    //idTipoDeServico: document.getElementById('idTipoDeServiço').value
+                    idTipoDeServiço: document.getElementById('idTipoDeServiço').value
                     
                 };
         
