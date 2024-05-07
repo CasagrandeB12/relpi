@@ -1,7 +1,7 @@
 package br.com.unochapeco.model.dao;
 
+import br.com.unochapeco.model.services.ServicoJDBC;
 import br.com.unochapeco.relpi.controller.db.DB;
-import br.com.unochapeco.relpi.resources.ServicoJDBC;
 
 public class ServicoDaoFactory {
 

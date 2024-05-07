@@ -7,24 +7,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "profissional")
-public class Profissional extends Pessoas implements Serializable{
+@Table(name = "cliente")
+public class Cliente extends Pessoas implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
-	private Integer status;
-	private Servico servico;
 	private Pessoas pessoas;
 	
-	public Profissional() {
+	public Cliente() {
 	}
 
-	public Profissional(Integer id, Integer status, Servico servico, Pessoas pessoas) {
+	public Cliente(Integer id, Pessoas pessoas) {
 		super();
 		this.id = id;
-		this.status = status;
-		this.servico = servico;
 		this.pessoas = pessoas;
 	}
 
@@ -34,22 +30,6 @@ public class Profissional extends Pessoas implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public Servico getServico() {
-		return servico;
-	}
-
-	public void setServico(Servico servico) {
-		this.servico = servico;
 	}
 
 	public Pessoas getPessoas() {
@@ -76,7 +56,7 @@ public class Profissional extends Pessoas implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Profissional other = (Profissional) obj;
+		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
 	}
 }

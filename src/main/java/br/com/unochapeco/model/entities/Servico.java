@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servico")
-public class Servico extends TipoServico implements Serializable{
+public class Servico implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	

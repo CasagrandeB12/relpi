@@ -4,53 +4,55 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tipo_servico")
-public class TipoServico implements Serializable{
+@Table(name = "cidade")
+public class Cidade extends Pais implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Estado estado;
 	
-	public TipoServico() {
+	public Cidade() {
 	}
-	
-	public TipoServico(Integer id) {
-		this.id = id;
-	}
-	
-	public TipoServico(Integer id, String nome) {
+
+	public Cidade(Integer id, String nome, Estado estado) {
+		super();
 		this.id = id;
 		this.nome = nome;
+		this.estado = estado;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -61,12 +63,7 @@ public class TipoServico implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoServico other = (TipoServico) obj;
+		Cidade other = (Cidade) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "TipoServico [id=" + id + ", nome=" + nome + "]";
 	}
 }
