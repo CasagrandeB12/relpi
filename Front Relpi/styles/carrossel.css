@@ -36,6 +36,7 @@
 
 .botoes{
     display: flex;
+    align-items: center;
 }
 
 .card{
@@ -115,8 +116,7 @@
     .swiper-button-prev, 
     .swiper-button-next{
         display: block;
-        top: 50%;
-        transform: translateY(100%); 
+
     }
 
     .card{

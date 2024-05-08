@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>${record.cpf}</td>
             <td>${record.rg}</td>
             <td>${record.genero}</td>
-            <td>${record.data}</td>
+            <td>${record.dataNascimento}</td>
             <td>${record.email}</td>
             <td>${record.telefone}</td>
             <td>
