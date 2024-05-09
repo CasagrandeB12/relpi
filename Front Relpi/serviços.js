@@ -34,3 +34,29 @@ function filtrarPesquisa() {
 function normalizeString(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
+
+const botaoCategoria = document.querySelectorAll(".superior__item");
+
+botaoCategoria.forEach((botao) => {
+    let nomeCategoria = botao.getAttribute("name");
+    botao.addEventListener("click", () => filtrarCategorias(nomeCategoria));
+})
+
+function filtrarCategorias(filtro) {
+    let algumVideoExibido = false;
+
+    cards.forEach(card => {
+        let categoria = card.getAttribute("name").toLowerCase(); // Converta para minúsculas para garantir a correspondência correta
+
+        if (filtro === 'tudo' || categoria.includes(filtro.toLowerCase())) {
+            card.style.display = "block";
+            algumVideoExibido = true;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    if (!algumVideoExibido) {
+        alert("Nenhum vídeo encontrado para o filtro especificado.");
+    }
+}

@@ -63,7 +63,8 @@
 .servicos_itens{
     margin-top:3.5em ;
     padding: 1em 1em;
-    
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .servicos_itens img {
@@ -74,5 +75,6 @@
     margin-bottom: 50px;
     border: 1px solid black;
     box-shadow: 10px 20px grey;
+    flex-grow: 1;
 
 }
