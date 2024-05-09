@@ -1,5 +1,13 @@
+.banner__servicos h1{
+    text-align: center;
+    padding: 1em;
+    font-size: 30px;
+    font-family: var(--fonte-principal);
+}
+
 .cabecalho__pesquisar__item {
     display: block;
+    margin-top: 3em;
 }
 
 
@@ -54,12 +62,17 @@
 }
 .servicos_itens{
     margin-top:3.5em ;
+    padding: 1em 1em;
+    
 }
 
 .servicos_itens img {
     width: 25em;
     height: 25em;
-    padding: 1em 1em;
     margin-left: 1em;
     margin-right: 1em;
+    margin-bottom: 50px;
+    border: 1px solid black;
+    box-shadow: 10px 20px grey;
+
 }
