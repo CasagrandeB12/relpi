@@ -1,11 +1,18 @@
 .banner{
-    background: rgb(255,78,0);
-    background: linear-gradient(90deg, rgba(255,78,0,1) 0%, rgba(255,109,10,1) 47%, rgba(255,140,0,1) 85%);
+    background: #378CE7;
+    background: linear-gradient(to right, 
+    rgba(83, 86, 255, 1), 
+    rgba(87, 132, 240, 0.9), 
+    rgba(107, 168, 229, 0.8), 
+    rgba(141, 193, 236, 0.7), 
+    rgba(167, 210, 243, 0.8), /* Aumentei a opacidade aqui */
+    rgba(191, 225, 249, 0.9) /* Aumentei a opacidade aqui */
+);
     text-align: center;
     padding: 2.5em 2em;
 }
 
-.banner2{
+.banner2{   
     background: var(--cor-de-fundo);
     text-align: center;
     padding: 2.5em 2em;
@@ -16,7 +23,7 @@
 }
 
 .quadradobanner2{
-    background-image: url("../img/banner2.png");
+    background-image:url('/img/banner2.png');
     background-repeat: no-repeat;
     background-position: center;
     padding: 5em 30em;

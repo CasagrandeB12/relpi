@@ -35,7 +35,7 @@ th {
 
 .btn_cadastro{
     padding: 10px;
-    background-color: orange;
+    background-color: rgba(107, 168, 229, 0.8);
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
@@ -48,7 +48,7 @@ th {
 .btn_action_erase, .btn_action_pencil {
     margin-top: 10px;
     padding: 10px;
-    background-color:orange;
+    background-color:rgba(107, 168, 229, 0.8);
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
@@ -66,7 +66,7 @@ th {
 .filter-form input {
     padding: 8px;
     width: 200px;
-    border: 2px solid orange;
+    border: 2px solid rgba(107, 168, 229, 0.8);
     border-radius: 10px;
     margin: 0.8em;
 }
