@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/img/Logo.svg">
+    <link rel="icon" type="image/x-icon" href="/img/Logo.png">
 </head>
 <body>
     <header class="cabecalho">
@@ -83,11 +83,15 @@
                     <a href="crudPessoas.html">Pessoas</a>
                 </li>
                 <li class="lista_menu_item">
+                    <a href="crudProfissional.html">Profissional</a>
+                </li>
+                <li class="lista_menu_item">
                     <a href="crudServiço.html">Serviço</a>
                 </li>
                 <li class="lista_menu_item">
                     <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
                 </li>
+                
             </ul>
         </ul>
 
@@ -104,7 +108,6 @@
             <form class="filter-form">
                 <input id="nomeDoServiço" type="text" placeholder="Nome do serviço">
                 <input id="descrição" type="text" placeholder="Descrição">
-                <input id="id" type="text" placeholder="Id">
                 <input id="idTipoDeServiço" type="text" placeholder="Id do tipo de serviço">
                 <button class="btn_cadastro btn_add">Adicionar</button>
                 <button class="btn_cadastro btn_buscar">Buscar</button>
@@ -114,7 +117,6 @@
                     <tr>
                         <th>Nome do serviço</th>
                         <th>Descrição</th>
-                        <th>Id</th>
                         <th>Código do serviço</th>
                         <th>Ações</th>
                     </tr>
@@ -123,7 +125,6 @@
                     <tr>
                         <td>Exemplo</td>
                         <td>.........</td>
-                        <td>124</td>
                         <td>67</td>
                         <td>
                             <!--<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>!-->

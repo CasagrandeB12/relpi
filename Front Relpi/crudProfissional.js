@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
+    // Função para carregar os registros da tabela a partir do backend
     function loadRecords() {
-        fetch(`http://localhost:8080/tipo_servico/todos`)
+        fetch('http://localhost:8080/profissional/todos')
             .then(response => response.json())
             .then(records => {
                 const userList = document.getElementById('user-list');
@@ -18,39 +18,47 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Erro ao carregar registros:', error));
     }
 
-    // Função para criar uma nova linha na tabela com os dados de um registro
     function createUserRow(record) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${record.nome}</td>
+            <td>${record.pessoas.nome}</td>
+            <td>${record.servico.nome}</td>
             <td>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
+
         return newRow;
     }
 
-    // Evento de clique no botão de adicionar
+    
+
     document.querySelector('.btn_add').addEventListener('click', function(event) {
         event.preventDefault();
 
-        const nomeInput = document.getElementById('nomeDoServiço').value;
+        const idServicoInput = document.getElementById('idServiço').value;
+        const idPessoaInput = document.getElementById('idPessoa').value;
+        const checkboxInput = document.querySelector(".checkboxCrud");
+        const value = checkboxInput.checked ? 1 : 0;
+
         if (nomeInput.trim() === '') {
-            alert('Por favor, preencha todos os campos.');
+            alert('Por favor, preencha todos os campos e selecione um tipo de serviço.');
             return;
         }
-        fetch(`http://localhost:8080/tipo_servico/novo`, {
+
+        fetch('http://localhost:8080/profissional/novo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                nome: nomeInput
+                idServico: idServicoInput,
+                idPessoa: idPessoaInput,
+                status: value
             })
         })
         .then(response => {
             if (response.ok) {
-                // Se o registro for criado com sucesso, recarrega os registros na tabela
                 loadRecords();
                 document.querySelector('.filter-form').reset();
             } else {
@@ -60,13 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error(error));
     });
 
-    // Evento de clique aos botões de apagar na tabela
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
-            const nome = row.cells[0].textContent; // Assumindo que o ID está na segunda coluna
-            // Remove a linha da tabela
-            fetch(`http://localhost:8080/tipo_servico/${nome}`, {
+            const idServico = row.cells[0].textContent;
+            fetch(`http://localhost:8080/servico/${idServico}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -85,15 +91,21 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.btn_buscar').addEventListener('click', function(event) {
             event.preventDefault();
     
-            const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
-            const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
+            const idServicoInput = document.getElementById('idServiço');
+            const idPessoaInput = document.getElementById('idPessoa');
+    
+            const idServicoBusca = idServicoInput.value.toLowerCase();
+            const idPessoaBusca = idPessoaInput.value.toLowerCase();
     
             const rows = document.querySelectorAll('#user-list tr');
     
             rows.forEach(function(row) {
-
+                const idServico = row.cells[0].textContent.toLowerCase();
+                const idPessoa = row.cells[1].textContent.toLowerCase();
     
-                const match = (!nomeBusca || nome.includes(nomeBusca));
+                const match = 
+                (!idServicoBusca || idServico.includes(idServicoBusca)) &&
+                (!idPessoaBusca || idPessoa.includes(idPessoaBusca));
     
                 row.style.display = match ? '' : 'none';
             });

@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/img/Logo.svg">
+    <link rel="icon" type="image/x-icon" href="/img/Logo.png">
 </head>
 <body>
     <header class="cabecalho">
@@ -83,11 +83,15 @@
                     <a href="crudPessoas.html">Pessoas</a>
                 </li>
                 <li class="lista_menu_item">
+                    <a href="crudProfissional.html">Profissional</a>
+                </li>
+                <li class="lista_menu_item">
                     <a href="crudServiço.html">Serviço</a>
                 </li>
                 <li class="lista_menu_item">
                     <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
                 </li>
+                
             </ul>
         </ul>
 
@@ -100,49 +104,57 @@
     </header>
     <main class="conteudo">
         <div class="container_crud">
-            <div class="cadastroTipoDeServiço">Cadastro de Pessoas</div>
-            
-            <form class="filter-form" id="formPessoas" required>
-                <input id="nome" type="text" placeholder="Nome" required>
-                <input id="cpf" type="text" placeholder="CPF" required>
-                <input id="rg" type="text" placeholder="RG" required>
-                <input id="genero" type="text" placeholder="Gênero" required>
-                <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
-                <input id="email" type="email" placeholder="Email" required>
-                <input id="telefone" type="tel" placeholder="Telefone" required>
-                <button type="submit" class="btn_cadastro btn_add">Adicionar</button>
-                <button class="btn_cadastro btn_buscar">Buscar</button>
-            </form>
+            <div class="container_cabecalho_crud">
+                <div class="cadastroTipoDeServiço cadastroTipoDeServiçoPessoas"><a data-pessoas>Cadastro de Pessoas</a></div>
+                <div class="vertical-line"></div>
+                <div class="cadastroTipoDeServiço cadastroTipoDeServiçoPessoas"><a data-endereco>Cadastro de endereço</a></div>
+            </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>RG</th>
-                        <th>Gênero</th>
-                        <th>Data de Nascimento</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="user-list">
-                    <tr>
-                        <td>Exemplo</td>
-                        <td>123.456.789-00</td>
-                        <td>1234567-8</td>
-                        <td>Masculino</td>
-                        <td>01-01-1990</td>
-                        <td>exemplo@email.com</td>
-                        <td>(00) 1234-5678</td>
-                        <td>
-                            <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                            <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <section class="formInteiro">
+                <form class="filter-form" id="formPessoas" required>
+                    <input id="nome" type="text" placeholder="Nome" required>
+                    <input id="cpf" type="text" placeholder="CPF" required>
+                    <input id="rg" type="text" placeholder="RG" required>
+                    <input id="genero" type="text" placeholder="Gênero" required>
+                    <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
+                    <input id="email" type="email" placeholder="Email" required>
+                    <input id="telefone" type="tel" placeholder="Telefone" required>
+                    <input id="status" class="checkboxCrud" type="checkbox" required>
+                    <label for="status" class="checkboxCrudLabel">Profissional</label>
+                    <button type="submit" class="btn_cadastro btn_avancar">Avançar</button>
+                    <button class="btn_cadastro btn_buscar">Buscar</button>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>RG</th>
+                            <th>Gênero</th>
+                            <th>Data de Nascimento</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                        <tr>
+                            <td>Exemplo</td>
+                            <td>123.456.789-00</td>
+                            <td>1234567-8</td>
+                            <td>Masculino</td>
+                            <td>01-01-1990</td>
+                            <td>exemplo@email.com</td>
+                            <td>(00) 1234-5678</td>
+                            <td>
+                                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </div>
     </main>
     <footer class="rodape">

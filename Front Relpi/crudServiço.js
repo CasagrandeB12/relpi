@@ -18,84 +18,45 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Erro ao carregar registros:', error));
     }
 
-    /* Função para carregar os tipos de serviço disponíveis
-    function loadServiceTypes() {
-        fetch('http://localhost:8080/tipo_servico/todos')
-            .then(response => response.json())
-            .then(serviceTypes => {
-                const selectServiceType = document.getElementById('tipoDeServico');
-                if (selectServiceType) {
-                    // Limpa as opções existentes no campo de seleção
-                    selectServiceType.innerHTML = '';
-                    // Adiciona uma opção em branco para ser selecionada por padrão
-                    const defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.textContent = 'Selecione um tipo de serviço';
-                    selectServiceType.appendChild(defaultOption);
-                    // Adiciona as opções de tipo de serviço obtidas do backend
-                    serviceTypes.forEach(serviceType => {
-                        const option = document.createElement('option');
-                        option.value = serviceType.id; // Assumindo que o ID do tipo de serviço é único e apropriado
-                        option.textContent = serviceType.nome;
-                        selectServiceType.appendChild(option);
-                    });
-                } else {
-                    console.error(" 'tipoDeServico' não encontrado.");
-                }
-            })
-            .catch(error => console.error('Erro ao carregar tipos de serviço:', error));
-    }*/
-
-    // Função para criar uma nova linha na tabela com os dados de um registro
     function createUserRow(record) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
             <td>${record.nome}</td>
             <td>${record.descricao}</td>
-            <td>${record.id}</td>
-            <td>${record.tipoServico.id}</td>
+            <td>${record.tipoServico.nome}</td>
             <td>
                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
 
-        //<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
         return newRow;
     }
 
-    // Evento de clique no botão de adicionar
     document.querySelector('.btn_add').addEventListener('click', function(event) {
-        event.preventDefault(); // Evite que o formulário seja enviado
+        event.preventDefault();
 
-        // Obtenha os valores dos campos do formulário
         const nomeInput = document.getElementById('nomeDoServiço').value;
         const descricaoInput = document.getElementById('descrição').value;
-        const idInput = document.getElementById('id').value;
         const idTipoDeServiçoInput = document.getElementById('idTipoDeServiço').value;
 
-        // Verifique se os campos estão vazios
         if (nomeInput.trim() === '') {
             alert('Por favor, preencha todos os campos e selecione um tipo de serviço.');
             return;
         }
 
-        // Envia os dados para o backend criar um novo registro
         fetch('http://localhost:8080/servico/novo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: idInput,
                 nome: nomeInput,
                 descricao: descricaoInput,
                 tipoServico: idTipoDeServiçoInput
-                //tipoServicoId: tipoServicoInput // Envie o ID do tipo de serviço selecionado
             })
         })
         .then(response => {
             if (response.ok) {
-                // Se o registro for criado com sucesso, recarrega os registros na tabela
                 loadRecords();
                 document.querySelector('.filter-form').reset();
             } else {
@@ -108,9 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#user-list').addEventListener('click', function(event) {
         if (event.target.classList.contains('btn_action_erase') || event.target.classList.contains('fa-xmark')) {
             const row = event.target.closest('tr');
-            const id = row.cells[2].textContent; // Assumindo que o ID está na segunda coluna
-            // Remove a linha da tabela
-            fetch(`http://localhost:8080/servico/${id}`, {
+            const nome = row.cells[0].textContent;
+            fetch(`http://localhost:8080/servico/${nome}`, {
                 method: 'DELETE'
             })
             .then(response => {
@@ -132,12 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const nomeDoServiçoInput = document.getElementById('nomeDoServiço');
             const descriçãoInput = document.getElementById('descrição');
             const idTipoDeServicoInput = document.getElementById('idTipoDeServiço');
-            const idInput = document.getElementById('id');
     
             const nomeBusca = nomeDoServiçoInput.value.toLowerCase();
             const descriçãoBusca = descriçãoInput.value.toLowerCase();
             const idTipoDeServicoBusca = idTipoDeServicoInput.value.toLowerCase();
-            const idBusca = idInput.value.toLowerCase();
+
 
     
             const rows = document.querySelectorAll('#user-list tr');
@@ -150,8 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 const match = (!nomeBusca || nome.includes(nomeBusca)) &&
                               (!descriçãoBusca || descricao.includes(descriçãoBusca)) &&
-                              (!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca)) &&
-                              (!idBusca || id.includes(idBusca));
+                              (!idTipoDeServicoBusca || idTipoDeServico.includes(idTipoDeServicoBusca));
 
     
                 row.style.display = match ? '' : 'none';
@@ -177,50 +135,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        function updateRecord(id, newData) {
-            fetch(`http://localhost:8080/servico/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Se o registro for atualizado com sucesso, recarrega os registros na tabela
-                    loadRecords();
-                } else {
-                    throw new Error('Erro ao atualizar registro');
-                }
-            })
-            .catch(error => console.error(error));
-        }
-        
-        // Evento de clique nos botões de lápis na tabela
-        document.getElementById('user-list').addEventListener('click', function(event) {
-            if (event.target.classList.contains('btn_action_pencil')) {
-                const row = event.target.closest('tr');
-                const id = row.cells[2].textContent; // Assumindo que o ID está na primeira coluna
-        
-                const newData = {
-                    nomeDoServico: document.getElementById('nomeDoServiço').value,
-                    descricao: document.getElementById('descrição').value,
-                    id: document.getElementById('id').value,
-                    idTipoDeServiço: document.getElementById('idTipoDeServiço').value
-                    
-                };
-        
-                // Chama a função para atualizar o registro com os novos dados
-                updateRecord(id, newData);
-        
-                // Remove a linha da tabela
-                row.remove();
-            }
-        });
-
-    // Carrega os registros ao carregar a página
     loadRecords();
-
-    // Carrega os tipos de serviço disponíveis ao carregar a página
-    //loadServiceTypes();
 });

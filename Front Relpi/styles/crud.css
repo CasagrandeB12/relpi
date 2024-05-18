@@ -10,11 +10,35 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.container_cabecalho_crud
+{
+    display: flex;
+    justify-content: space-around;
+    
+}
 .cadastroTipoDeServiço {
     text-align: center;
     padding: 1em;
     font-size: 25px;
     font-weight:400;
+}
+.cadastroTipoDeServiçoPessoas {
+    cursor: pointer;
+}
+
+.checkboxCrud
+{
+    cursor: pointer;
+}
+
+.vertical-line
+{
+    background-color: #CCCCCC;
+    content: "";
+    width: 1.5px;
+    height: 4.5em;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -63,7 +87,7 @@ th {
 .filter-form {
     margin-bottom: 2em;
 }
-.filter-form input {
+.filter-form input, select {
     padding: 8px;
     width: 200px;
     border: 2px solid rgba(107, 168, 229, 0.8);
@@ -74,5 +98,56 @@ th {
     float: right;
 }
 
+.checkboxCrudLabel
+{
+    margin-left: 1em;
+    margin-right: 1em;
+}
 
 
+/* Esconder o checkbox padrão */
+.checkboxCrud {
+    display: none;
+  }
+  
+  /* Estilizar o visual do checkbox personalizado */
+  .checkboxCrud + label {
+    position: relative;
+    padding-left: 35px; /* Espaçamento para a caixa de seleção personalizada */
+    cursor: pointer;
+  }
+  
+  /* Estilizar o visual da caixa de seleção */
+  .checkboxCrud + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Largura da caixa de seleção */
+    height: 20px; /* Altura da caixa de seleção */
+    border: 2px solid  rgba(107, 168, 229, 0.8); /* Borda da caixa de seleção */
+    border-radius: 4px; /* Arredondamento dos cantos */
+  }
+  
+  /* Alterar a aparência da caixa de seleção quando marcada */
+  .checkboxCrud:checked + label:before {
+    background-color:  rgba(107, 168, 229, 0.8); /* Cor de fundo quando marcado */
+  }
+  
+  /* Estilizar a marcação dentro da caixa de seleção */
+  .checkboxCrud + label:after {
+    content: '\2713'; /* Unicode para marca de verificação */
+    font-size: 16px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    color: #fff; /* Cor da marca de verificação */
+    opacity: 0; /* Inicialmente invisível */
+    transition: opacity 0.2s; /* Transição suave ao aparecer */
+  }
+  
+  /* Alterar a opacidade da marca de verificação quando marcada */
+  .checkboxCrud:checked + label:after {
+    opacity: 1;
+  }
+  

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tipo de serviço - CRUD</title>
+    <title>Profissional - CRUD</title>
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/header.css">
@@ -104,25 +104,29 @@
     </header>
     <main class="conteudo">
         <div class="container_crud">
-            <div class="cadastroTipoDeServiço">Cadastro do Tipo de Serviços</div>
-            
-            <form class="filter-form" id="formPessoas">
-                <input type="text" id="nomeDoServiço" placeholder="Nome do tipo de serviço">
+            <div class="cadastroTipoDeServiço">Cadastro de profissional</div>
+            <form class="filter-form">
+                <input id="idServiço" type="text" placeholder="Código do serviço">
+                <input id="idPessoa" type="text"  placeholder="Código da pessoa">
+                <input id="status" class="checkboxCrud" type="checkbox" required>
+                <label for="status" class="checkboxCrudLabel">Ativo</label>
                 <button class="btn_cadastro btn_add">Adicionar</button>
                 <button class="btn_cadastro btn_buscar">Buscar</button>
             </form>
             <table>
-                <thead class="theadTipoDeServiço">
+                <thead>
                     <tr>
-                        <th>Nome do tipo de serviço</th>
+                        <th>Código do serviço</th>
+                        <th>Código da pessoa</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
                     <tr>
-                        <td>Exemplo</td>
+                        <td>456</td>
+                        <td>789</td>
                         <td>
-                            <!---<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>!-->
+                            <!--<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>!-->
                             <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
                         </td>
                     </tr>
@@ -133,6 +137,7 @@
     <footer class="rodape">
         <h2 class="rodape_titulo">Abex IV - 2024</h2>
     </footer>
-    <script src="crudTipoDeServiço.js"></script>
+
+    <script src="../Front Relpi/crudProfissional.js"></script>
 </body>
 </html>
