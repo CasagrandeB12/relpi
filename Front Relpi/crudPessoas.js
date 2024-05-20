@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function()
         event.preventDefault(); // Evite que o formulário seja enviado
     
         // Obtenha os valores dos campos do formulário
-        const nomeInput = document.getElementById('nomeDoServiço').value;
+        const nomeInput = document.getElementById('nome').value;
         const cpfInput = document.getElementById('cpf').value;
         const rgInput = document.getElementById('rg').value;
         const generoInput = document.getElementById('genero').value;
@@ -282,9 +282,8 @@ document.addEventListener('DOMContentLoaded', function()
                 filterForm.appendChild(clearButton);
             }
         });
-});
 
-//FUNÇÃO DO BOTAO CADASTRO DE ENDEREÇO
+        //FUNÇÃO DO BOTAO CADASTRO DE ENDEREÇO
     function cadastroEndereco()
     {
         const botaoEndereco = document.querySelector("[data-endereco]");
@@ -483,8 +482,12 @@ document.addEventListener('DOMContentLoaded', function()
         document.querySelector('.formInteiro').remove();
         
         paiDoFormulario.appendChild(novoFormulario);
+        
+        loadRecords();
         }
         
     }
 
     cadastroPessoas();
+});
+
