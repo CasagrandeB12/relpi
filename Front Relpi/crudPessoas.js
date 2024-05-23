@@ -84,8 +84,9 @@ document.addEventListener('DOMContentLoaded', function()
         localStorage.setItem('records', JSON.stringify(records));
     });
 
+    const botaoAdd = document.querySelector('.btn_add');
     //FUNÇÃO DO BOTÃO ADICIONAR
-        document.querySelector('.btn_add').addEventListener('click', function(event) {
+        botaoAdd.addEventListener('click', function(event) {
             event.preventDefault();
 
             // Recupere os registros do localStorage
@@ -118,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function()
 
 
             //ENVIO DO ENDERECO
-            const cidadeInput = document.getElementById('cidade').value;
             const bairroInput = document.getElementById('bairro').value;
             const ruaInput = document.getElementById('rua').value;
             const numeroInput = document.getElementById('numero').value;
@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function()
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    cidade: cidadeInput,
                     bairro: bairroInput,
                     rua: ruaInput,
                     numero: numeroInput
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function()
         }
     
     
-        document.getElementById('user-list').addEventListener('click', function(event) {
+        document.querySelector(".fa-pencil").addEventListener('click', function(event) {
             if (event.target.classList.contains('btn_action_pencil')) {
                 const row = event.target.closest('tr');
                 const id = row.cells[0].textContent; // Assumindo que o ID está na primeira coluna
@@ -196,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function()
         });
 
     //FUNÇÃO DO BOTÃO DELETE
-        userList.addEventListener('click', function(event) {
+        document.querySelector(".fa-xmark").addEventListener('click', function(event) {
             if (event.target.classList.contains('btn_action_erase')) {
                 const row = event.target.closest('tr');
                 const id = row.cells[1].textContent; // ID do usuário a ser excluído
@@ -349,71 +348,13 @@ document.addEventListener('DOMContentLoaded', function()
         
     }
 
-    cadastroEndereco();
-
-//GET DA CIDADE
-    function createUserRowCidade(record) {
-        const newRow = document.getElementById('cidade')
-        newRow.innerHTML = `
-            <option>${record.nome}<option>
-        `;
-        return newRow;
-    }
+    
 
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        function fetchNames() {
-            return fetch('http://localhost:8080/cidade/todos')
-            .then(response => response.json())
-            .then(records => {
-                const cidadeLista = document.getElementById('cidade');
-                if (cidadeLista) {
-                    cidadeLista.innerHTML = '';
-                } else {
-                    console.error(" 'cidade-Lista' não encontrado.");
-                }
-                records.forEach(record => {
-                    const newRow = createUserRowCidade(record);
-                    cidadeLista.appendChild(newRow);
-                });
-            })
-            .catch(error => console.error('Erro ao carregar registros:', error));
-        }
 
-        fetchNames();
-    })
- 
-//GET DO BAIRRO
-    function createUserRowBairro(record) {
-        const newRow = document.getElementById('bairro')
-        newRow.innerHTML = `
-            <option>${record.nome}<option>
-        `;
-        return newRow;
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        function fetchNames() {
-            return fetch('http://localhost:8080/bairro/todos')
-            .then(response => response.json())
-            .then(records => {
-                const bairroLista = document.getElementById('bairro');
-                if (bairroLista) {
-                    bairroLista.innerHTML = '';
-                } else {
-                    console.error(" 'cidade-Lista' não encontrado.");
-                }
-                records.forEach(record => {
-                    const newRow = createUserRowCidade(record);
-                    bairroLista.appendChild(newRow);
-                });
-            })
-            .catch(error => console.error('Erro ao carregar registros:', error));
-        }
-
-        fetchNames();
-    })
+    
 
 
 //FUNÇÃO DO BOTAO DE CADASTRO PESSOAS
@@ -487,7 +428,40 @@ document.addEventListener('DOMContentLoaded', function()
         }
         
     }
-
+    cadastroEndereco();
     cadastroPessoas();
+    
+ 
+//GET DO BAIRRO
+    function createUserRowBairro(record) {
+        const newRow = document.getElementById('bairro')
+        newRow.innerHTML = `
+            <option>${record.nome}<option>
+        `;
+        return newRow;
+    }
+
+
+        function fetchNames() {
+            return fetch('http://localhost:8080/bairro/todos')
+            .then(response => response.json())
+            .then(records => {
+                const bairroLista = document.getElementById('bairro');
+                if (bairroLista) {
+                    bairroLista.innerHTML = '';
+                } else {
+                    console.error(" 'cidade-Lista' não encontrado.");
+                }
+                records.forEach(record => {
+                    const newRow = createUserRowBairro(record);
+                    bairroLista.appendChild(newRow);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+        }
+
+        
+        fetchNames();
+   
 });
 
