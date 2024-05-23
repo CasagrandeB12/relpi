@@ -106,8 +106,6 @@
         <div class="container_crud">
             <div class="container_cabecalho_crud">
                 <div class="cadastroTipoDeServiço cadastroTipoDeServiçoPessoas"><a data-pessoas>Cadastro de Pessoas</a></div>
-                <div class="vertical-line"></div>
-                <div class="cadastroTipoDeServiço cadastroTipoDeServiçoPessoas"><a data-endereco>Cadastro de endereço</a></div>
             </div>
 
             <section class="formInteiro">
@@ -119,9 +117,16 @@
                     <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
                     <input id="email" type="email" placeholder="Email" required>
                     <input id="telefone" type="tel" placeholder="Telefone" required>
-                    <input id="status" class="checkboxCrud" type="checkbox">
-                    <label for="status" class="checkboxCrudLabel">Profissional</label>
-                    <button type="submit" class="btn_cadastro btn_avancar">Avançar</button>
+                    <select id="cidade">
+                        <option disabled selected>Cidade</option>
+                        <option>Chapecó</option>
+                    </select>
+                    <select id="bairro" required>
+                        <option disabled selected>Bairro<option>
+                    </select>
+                    <input id="rua" type="text" placeholder="Rua" required>
+                    <input id="numero" type="text" placeholder="Número" required>
+                    <button type="submit" class="btn_cadastro btn_add">Adicionar</button>
                     <button class="btn_cadastro btn_buscar">Buscar</button>
                 </form>
 
@@ -129,8 +134,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>CPF</th>
-                            <th>RG</th>
+                            <th>CPF</th>    
                             <th>Gênero</th>
                             <th>Data de Nascimento</th>
                             <th>Email</th>
@@ -142,14 +146,15 @@
                         <tr>
                             <td>Exemplo</td>
                             <td>123.456.789-00</td>
-                            <td>1234567-8</td>
-                            <td>Masculino</td>
+                            <td>M</td>
                             <td>01-01-1990</td>
                             <td>exemplo@email.com</td>
                             <td>(00) 1234-5678</td>
                             <td>
                                 <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
+                                <button class="btn_action_erase"><i class="fa-solid fa-location-dot"></i></button>
                                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
+
                             </td>
                         </tr>
                     </tbody>

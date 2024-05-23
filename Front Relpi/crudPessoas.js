@@ -3,7 +3,7 @@ let count = 0;
 document.addEventListener('DOMContentLoaded', function() 
 {
     function loadRecords() {
-        fetch(`http://localhost:8080/pessoas/todos`)
+        fetch("http://localhost:8080/pessoas/todos")
             .then(response => response.json())
             .then(records => {
                 const userList = document.getElementById('user-list');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function()
     loadRecords();
 
     //FUNÇÃO DO BOTÃO AVANÇAR
-    document.querySelector('.btn_avancar').addEventListener('click', function(event) {
+    document.querySelector('.btn_add').addEventListener('click', function(event) {
         event.preventDefault(); // Evite que o formulário seja enviado
     
         // Obtenha os valores dos campos do formulário
@@ -74,14 +74,6 @@ document.addEventListener('DOMContentLoaded', function()
             telefone: telefoneInput
         };
     
-        // Obtenha os registros existentes do localStorage
-        let records = JSON.parse(localStorage.getItem('records')) || [];
-    
-        // Adicione o novo registro à lista de registros
-        records.push(newRecord);
-    
-        // Salve os registros atualizados no localStorage
-        localStorage.setItem('records', JSON.stringify(records));
     });
 
     const botaoAdd = document.querySelector('.btn_add');
@@ -151,8 +143,8 @@ document.addEventListener('DOMContentLoaded', function()
         });
 
         //FUNÇÃO DO BOTÃO EDIT
-        function updateRecord(id, newData) {
-            fetch(`http://localhost:8080/pessoas/${id}`, {
+        function updateRecord(newData) {
+            fetch("http://localhost:8080/pessoas/${id}", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -200,7 +192,29 @@ document.addEventListener('DOMContentLoaded', function()
                 const row = event.target.closest('tr');
                 const id = row.cells[1].textContent; // ID do usuário a ser excluído
 
-                fetch(`http://localhost:8080/pessoas/${id}`, {
+                fetch("http://localhost:8080/pessoas/${id}", {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Se o registro for excluído com sucesso, recarrega os registros na tabela
+                        loadRecords();
+                    } else {
+                        throw new Error('Erro ao excluir registro');
+                    }
+                })
+                .catch(error => console.error(error));
+            }
+        });
+
+        //FUNCAO MAPA
+
+        document.querySelector(".fa-location-dot").addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn_action_erase')) {
+                const row = event.target.closest('tr');
+                const id = row.cells[1].textContent; // ID do usuário a ser excluído
+
+                fetch("http://localhost:8080/pessoas/${id}", {
                     method: 'DELETE'
                 })
                 .then(response => {
@@ -282,156 +296,16 @@ document.addEventListener('DOMContentLoaded', function()
             }
         });
 
-        //FUNÇÃO DO BOTAO CADASTRO DE ENDEREÇO
-    function cadastroEndereco()
-    {
-        const botaoEndereco = document.querySelector("[data-endereco]");
-        const botaoAvancar = document.querySelector(".btn_avancar")
-
-        botaoEndereco.addEventListener("click", mostraCadastroEndereco);
-        botaoAvancar.addEventListener("click", mostraCadastroEndereco);
-    }
-
-    function mostraCadastroEndereco() {
-
-        if (count == 0)
-        {
-            const novoFormulario = document.createElement('section');
-            novoFormulario.classList.add('formInteiro');
-            novoFormulario.innerHTML = `
-                <form class="filter-form" id="formPessoas" required>
-                    <select id="cidade">
-                        <option disabled selected>Cidade<option>
-                    </select>
-                    <select id="bairro" required>
-                        <option disabled selected>Bairro<option>
-                    </select>
-                    <input id="rua" type="text" placeholder="Rua" required>
-                    <input id="numero" type="text" placeholder="Número" required>
-                    <button type="submit" class="btn_cadastro btn_add">Adicionar</button>
-                    <button class="btn_cadastro btn_buscar">Buscar</button>
-                </form>
-        
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Cidade</th>
-                            <th>Bairro</th>
-                            <th>Rua</th>
-                            <th>Número</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="user-list">
-                        <tr>
-                            <td>Xaxim</td>
-                            <td>Efapi</td>
-                            <td>Calamidades</td>
-                            <td>131</td>
-                            <td>
-                                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                                <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
-            
-            const paiDoFormulario = document.querySelector('.formInteiro').parentNode;
-            
-            document.querySelector('.formInteiro').remove();
-            
-            paiDoFormulario.appendChild(novoFormulario);
-
-            count = 1;
-        }
-        
-    }
-
-    
-
-
-
-
-
-    
-
-
-//FUNÇÃO DO BOTAO DE CADASTRO PESSOAS
-    function cadastroPessoas()
-    {
-        const botaoPessoas = document.querySelector("[data-pessoas]");
-
-        botaoPessoas.addEventListener("click", mostraCadastroPessoas);
-    }
-
-    function mostraCadastroPessoas() {
-        if(count != 0)
-        {
-            const novoFormulario = document.createElement('section');
-            novoFormulario.classList.add('formInteiro');
-            novoFormulario.innerHTML = `
-            <form class="filter-form" id="formPessoas" required>
-                        <input id="nome" type="text" placeholder="Nome" required>
-                        <input id="cpf" type="text" placeholder="CPF" required>
-                        <input id="rg" type="text" placeholder="RG" required>
-                        <input id="genero" type="text" placeholder="Gênero" required>
-                        <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
-                        <input id="email" type="email" placeholder="Email" required>
-                        <input id="telefone" type="tel" placeholder="Telefone" required>
-                        <input id="status" class="checkboxCrud" type="checkbox" required>
-                        <label for="status" class="checkboxCrudLabel">Profissional</label>
-                        <button type="submit" class="btn_cadastro btn_avancar">Avançar</button>
-                        <button class="btn_cadastro btn_buscar">Buscar</button>
-                    </form>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>RG</th>
-                                <th>Gênero</th>
-                                <th>Data de Nascimento</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="user-list">
-                            <tr>
-                                <td>Exemplo</td>
-                                <td>123.456.789-00</td>
-                                <td>1234567-8</td>
-                                <td>Masculino</td>
-                                <td>01-01-1990</td>
-                                <td>exemplo@email.com</td>
-                                <td>(00) 1234-5678</td>
-                                <td>
-                                    <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                                    <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-        `;
-
-        count = 0;
-        
-        const paiDoFormulario = document.querySelector('.formInteiro').parentNode;
-        
-        document.querySelector('.formInteiro').remove();
-        
-        paiDoFormulario.appendChild(novoFormulario);
-        
-        loadRecords();
-        }
-        
-    }
-    cadastroEndereco();
-    cadastroPessoas();
-    
+        const enderecoFuncao = document.querySelector(".enderecoFuncao");
+        enderecoFuncao.addEventListener('click', chamaFuncaoEndereco())
  
+        function chamaFuncaoEndereco() 
+        {
+            console.log(enderecoFuncao)
+            enderecoFuncao.innerHTML = `
+            <h1>aaa</h1>
+            `
+        }
 //GET DO BAIRRO
     function createUserRowBairro(record) {
         const newRow = document.getElementById('bairro')
@@ -462,6 +336,5 @@ document.addEventListener('DOMContentLoaded', function()
 
         
         fetchNames();
-   
+   
 });
-
