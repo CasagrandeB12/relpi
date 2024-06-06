@@ -45,13 +45,11 @@
                 <h1 class="container_titulo"><b container_titulo_negrito>Relpi</b></h1>
             </a>
         </div>
-
         <ul class="opcoes">
             <input type="checkbox" id="opcoes_menu" class="opcoes_botao">
             <label for="opcoes_menu">
                 <li class="opcoes_item">Categorias</li>
             </label>
-
             <ul class="lista_menu">
                 <li class="lista_menu_item">
                     <a href="#">Farmaceúticos</a>
@@ -70,14 +68,11 @@
                 </li>
             </ul>
         </ul>
-
-
         <ul class="opcoes">
             <input type="checkbox" id="opcoes_menu1" class="opcoes_botao">
             <label for="opcoes_menu1">
                 <li class="opcoes_item">CADASTROS</li>
             </label>
-
             <ul class="lista_menu">
                 <li class="lista_menu_item">
                     <a href="crudPessoas.html">Pessoas</a>
@@ -91,10 +86,8 @@
                 <li class="lista_menu_item">
                     <a href="crudTipoDeServiço.html">Tipo de Serviço</a>
                 </li>
-                
             </ul>
         </ul>
-
         <div class="container">
             <a href="#" class="container_link">
                 <img class="container_imagem" src="img/Usuário.svg" alt="Meu perfil">
@@ -107,12 +100,10 @@
             <div class="container_cabecalho_crud">
                 <div class="cadastroTipoDeServiço cadastroTipoDeServiçoPessoas"><a data-pessoas>Cadastro de Pessoas</a></div>
             </div>
-
             <section class="formInteiro">
-                <form class="filter-form" id="formPessoas" required>
+                <form class="filter-form" id="formPessoas">
                     <input id="nome" type="text" placeholder="Nome" required>
                     <input id="cpf" type="text" placeholder="CPF" required>
-                    <input id="rg" type="text" placeholder="RG" required>
                     <input id="genero" type="text" placeholder="Gênero" required>
                     <input id="data" type="date" placeholder="Nascimento (21-02-2000)" required>
                     <input id="email" type="email" placeholder="Email" required>
@@ -122,14 +113,13 @@
                         <option>Chapecó</option>
                     </select>
                     <select id="bairro" required>
-                        <option disabled selected>Bairro<option>
+                        <option disabled selected>Bairro</option>
                     </select>
                     <input id="rua" type="text" placeholder="Rua" required>
                     <input id="numero" type="text" placeholder="Número" required>
                     <button type="submit" class="btn_cadastro btn_add">Adicionar</button>
                     <button class="btn_cadastro btn_buscar">Buscar</button>
                 </form>
-
                 <table>
                     <thead>
                         <tr>
@@ -151,22 +141,25 @@
                             <td>exemplo@email.com</td>
                             <td>(00) 1234-5678</td>
                             <td>
-                                <button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>
-                                <button class="btn_action_erase"><i class="fa-solid fa-location-dot"></i></button>
+                                <button class="btn_action_map"><i class="fa-solid fa-location-dot"></i></button>
                                 <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>
-
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </section>
         </div>
-        
+
+        <div id="addressModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p id="addressText"></p>
+            </div>
+          </div>
     </main>
     <footer class="rodape">
         <h2 class="rodape_titulo">Abex IV - 2024</h2>
     </footer>
-
     <script src="crudPessoas.js"></script>
 </body>
 </html>
