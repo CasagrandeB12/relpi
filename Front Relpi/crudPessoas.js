@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Função para carregar registros da API
     function loadRecords() {
-        fetch("http://localhost:8080/pessoas/todos")
+        fetch("http://localhost:8080/endereco/todos")
             .then(response => response.json())
             .then(records => {
                 const userList = document.getElementById('user-list');
@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function createUserRow(record) {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${record.nome}</td>
-            <td>${record.cpf}</td>
-            <td>${record.genero}</td>
-            <td>${record.dataNascimento}</td>
-            <td>${record.email}</td>
-            <td>${record.telefone}</td>
+            <td>${record.pessoas.nome}</td>
+            <td>${record.pessoas.cpf}</td>
+            <td>${record.pessoas.genero}</td>
+            <td>${record.pessoas.dataNascimento}</td>
+            <td>${record.pessoas.email}</td>
+            <td>${record.pessoas.telefone}</td>
             <td>
-                <button class="btn_action_map" data-address="${record.rua}, ${record.numero} - ${record.bairro}"><i class="fa-solid fa-location-dot"></i></button>
+                <button class="btn_action_map" data-address="${record.nome}, ${record.numero} - ${record.bairro.nome}"><i class="fa-solid fa-location-dot"></i></button>
                 <button class="btn_action_erase" data-id="${record.id}"><i class="fa-solid fa-xmark"></i></button>
             </td>
         `;
@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 genero: generoInput,
                 dataNascimento: dataInput,
                 email: emailInput,
+                status: 1,
+                rg: 82,
                 telefone: telefoneInput
             })
         })
@@ -129,22 +131,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    bairro: bairroInput,
-                    rua: ruaInput,
-                    numero: numeroInput
+                    bairroFront: bairroInput,
+                    status: 1,
+                    nome: ruaInput,
+                    numero: numeroInput,
+                    pessoas: {
+                        id: pessoasData.id // Relaciona o endereço com a pessoa recém-criada
+                    }
                 })
             })
             .then(response => response.json())
             .then(enderecoData => {
-                // Adiciona uma nova linha na lista de usuários (se necessário)
-                const newRow = createUserRow({
-                    ...pessoasData,
-                    rua: enderecoData.rua,
-                    numero: enderecoData.numero,
-                    bairro: enderecoData.bairro
-                });
-                const userList = document.getElementById('user-list');
-                userList.appendChild(newRow);
+                // Certifique-se de que os dados de endereço estão no formato esperado
+                if (enderecoData && enderecoData.nome && enderecoData.numero && enderecoData.bairro) {
+                    // Adiciona uma nova linha na lista de usuários (se necessário)
+                    const newRow = createUserRow({
+                        pessoas: pessoasData,
+                        nome: enderecoData.nome,
+                        numero: enderecoData.numero,
+                        bairro: enderecoData.bairro
+                    });
+                    const userList = document.getElementById('user-list');
+                    userList.appendChild(newRow);
+                } else {
+                    console.error('Dados de endereço incompletos:', enderecoData);
+                }
     
                 // Reseta o formulário
                 document.getElementById('formPessoas').reset();
