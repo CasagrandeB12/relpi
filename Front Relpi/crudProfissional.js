@@ -130,5 +130,58 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+
+        //GET DO SERVICO
+        function createUserRowServico(record) {
+            const newOption = document.createElement('option');
+            newOption.textContent = record.nome;
+            return newOption;
+        }
+    
+        function fetchNamesServico() {
+            return fetch('http://localhost:8080/servico/todos')
+            .then(response => response.json())
+            .then(records => {
+                const servicoLista = document.getElementById('servico');
+                if (servicoLista) {
+                    servicoLista.innerHTML = '';
+                    records.forEach(record => {
+                        const newOption = createUserRowServico(record);
+                        servicoLista.appendChild(newOption);
+                    });
+                } else {
+                    console.error(" 'serviços' não encontrado.");
+                }
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+        }
+
+        //GET DA PESSOA
+        function createUserRowPessoa(record) {
+            const newOption = document.createElement('option');
+            newOption.textContent = record.nome;
+            return newOption;
+        }
+    
+        function fetchNamesPessoa() {
+            return fetch('http://localhost:8080/servico/todos')
+            .then(response => response.json())
+            .then(records => {
+                const pessoaLista = document.getElementById('pessoa');
+                if (pessoaLista) {
+                    pessoaLista.innerHTML = '';
+                    records.forEach(record => {
+                        const newOption = createUserRowPessoa(record);
+                        pessoaLista.appendChild(newOption);
+                    });
+                } else {
+                    console.error(" 'serviços' não encontrado.");
+                }
+            })
+            .catch(error => console.error('Erro ao carregar registros:', error));
+        }
+        
+
     loadRecords();
+    fetchNamesServico();
 });
