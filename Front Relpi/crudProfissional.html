@@ -106,11 +106,11 @@
         <div class="container_crud">
             <div class="cadastroTipoDeServiço">Cadastro de profissional</div>
             <form class="filter-form">
-                <select id="servico" required>
-                    <option disabled selected>Serviço</option>
-                </select>
                 <select id="pessoa" required>
                     <option disabled selected>Pessoa</option>
+                </select>
+                <select id="servico" required>
+                    <option disabled selected>Serviço</option>
                 </select>
                 <input id="status" class="checkboxCrud" type="checkbox" required>
                 <label for="status" class="checkboxCrudLabel">Ativo</label>
@@ -120,15 +120,15 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Serviço</th>
                         <th>Pessoa</th>
+                        <th>Serviço</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="user-list">
                     <tr>
-                        <td>Dentista</td>
                         <td>Túlio</td>
+                        <td>Dentista</td>
                         <td>
                             <!--<button class="btn_action_pencil"><i class="fa-solid fa-pencil"></i></button>!-->
                             <button class="btn_action_erase"><i class="fa-solid fa-xmark"></i></button>

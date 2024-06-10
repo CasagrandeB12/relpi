@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function fetchNamesPessoa() {
-            return fetch('http://localhost:8080/servico/todos')
+            return fetch('http://localhost:8080/pessoas/todos')
             .then(response => response.json())
             .then(records => {
                 const pessoaLista = document.getElementById('pessoa');
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         pessoaLista.appendChild(newOption);
                     });
                 } else {
-                    console.error(" 'serviços' não encontrado.");
+                    console.error(" 'pessoas' não encontrado.");
                 }
             })
             .catch(error => console.error('Erro ao carregar registros:', error));
@@ -184,4 +184,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadRecords();
     fetchNamesServico();
+    fetchNamesPessoa();
 });
