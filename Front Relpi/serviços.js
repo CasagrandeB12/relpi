@@ -60,3 +60,47 @@ function filtrarCategorias(filtro) {
         alert("Nenhum vídeo encontrado para o filtro especificado.");
     }
 }
+
+async function fetchPessoas() {
+    try {
+        const response = await fetch('http://localhost:8080/pessoas/todos');
+        const pessoas = await response.json();
+        return pessoas;
+    } catch (error) {
+        console.error('Erro ao buscar pessoas:', error);
+    }
+}
+
+async function fetchProfissionais() {
+    try {
+        const response = await fetch('http://localhost:8080/profissional/todos');
+        const profissionais = await response.json();
+        return profissionais;
+    } catch (error) {
+        console.error('Erro ao buscar profissionais:', error);
+    }
+}
+
+async function updateProfissionaisSection() {
+    const profissionais = await fetchProfissionais();
+
+    const section = document.querySelector('.servicos_itens');
+    section.innerHTML = ''; // Limpa a seção antes de adicionar os profissionais
+
+    profissionais.forEach(profissional => {
+        const div = document.createElement('div');
+        div.classList.add('card_servicos_itens');
+
+        div.innerHTML = `
+            <h3 class="banner__servicos">${profissional.pessoas.nome}</h3>
+            <p class="banner__servicos">${profissional.servico.nome}</p>
+            <a href="#" class="btn">Ver mais</a>
+        `;
+
+        section.appendChild(div);
+    });
+}
+
+fetchPessoas();
+fetchProfissionais();
+updateProfissionaisSection();
