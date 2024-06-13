@@ -22,7 +22,7 @@
 }
 
 .card_servicos_itens h3 {
-    background: #007BFF;
+    background-color: rgba(107, 168, 229, 0.8);
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     font-size: 1.5em;
@@ -40,7 +40,7 @@
 
 .card_servicos_itens .btn {
     display: block;
-    background: #007BFF;
+    background-color: rgba(107, 168, 229, 0.8);
     color: #ffffff;
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
