@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const idServicoInput = document.getElementById('idServiço').value;
         const idPessoaInput = document.getElementById('idPessoa').value;
-        const checkboxInput = document.querySelector(".checkboxCrud");
-        const value = checkboxInput.checked ? 1 : 0;
 
         if (nomeInput.trim() === '') {
             alert('Por favor, preencha todos os campos e selecione um tipo de serviço.');
@@ -53,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({
                 idServico: idServicoInput,
-                idPessoa: idPessoaInput,
-                status: value
+                idPessoa: idPessoaInput
             })
         })
         .then(response => {

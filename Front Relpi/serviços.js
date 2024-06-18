@@ -94,7 +94,7 @@ async function updateProfissionaisSection() {
         div.innerHTML = `
             <h3 class="banner__servicos">${profissional.pessoas.nome}</h3>
             <p class="banner__servicos">${profissional.servico.nome}</p>
-            <a href="#" class="btn">Ver mais</a>
+            <a href="tulio.html" class="btn">Ver mais</a>
         `;
 
         section.appendChild(div);
